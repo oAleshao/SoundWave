@@ -19,6 +19,24 @@ namespace SoundWave.DAL.Repositories
 			this.db = context;
 		}
 
+		public async Task Create(UsersLikes item)
+		{
+		   await db.usersLikes.AddAsync(item);
+		}
+
+		public async Task Update(int userId, int songId, string action, bool active)
+		{
+			var userLikes = await db.usersLikes.Where(ul => ul.Owner.Id == userId && ul.song.Id == songId).FirstOrDefaultAsync();
+			if (userLikes != null)
+			{
+				if(action == "like")
+					userLikes.Like = active;
+				else
+					userLikes.Dislike = active;
+			}
+			db.Entry(userLikes).State = EntityState.Modified;
+		}
+
 		/// <summary>
 		/// param id is user's id who pressed
 		/// </summary>
@@ -30,5 +48,7 @@ namespace SoundWave.DAL.Repositories
 			var listLikes = await db.usersLikes.Where(l => l.Owner.Id == id).ToListAsync();
 			return listLikes;
 		}
+
+		
 	}
 }

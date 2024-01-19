@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoundWave.BLL.DTO
 {
-	internal class GanreDTO
+	public class GanreDTO
 	{
 		public int Id { get; set; }
 		public string? Title { get; set; }

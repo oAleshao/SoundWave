@@ -16,6 +16,7 @@ namespace SoundWave.DAL.Context
 		public DbSet<Song> songs { get; set; }
 		public DbSet<Playlist> playlists { get; set; }
 		public DbSet<UsersLikes> usersLikes { get; set; }
+		public DbSet<History> histories { get; set; }
 
 		public SoundWaveContext(DbContextOptions<SoundWaveContext> options) : base(options)
 		{

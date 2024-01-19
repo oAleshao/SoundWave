@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace SoundWave.BLL.Interfaces
 {
-	public interface ISongService
+	public interface IHistoryService
 	{
-		Task Create(SongDTO song);
-		Task Update(SongDTO song);
+		Task Create(HistoryDTO item);
 		Task Delete(int id);
-		Task<SongDTO> GetById(int id);
-		Task<SongDTO> GetByName(string name);
-		Task<IEnumerable<SongDTO>> ToList();
-
+		Task<IEnumerable<HistoryDTO>> ToList();
 	}
 }

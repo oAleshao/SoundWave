@@ -14,6 +14,7 @@ namespace SoundWave.DAL.Interfaces
 		public IRepository<Song> songs { get; }
 		public IRepository<Playlist> playlists { get; }
 		public IRepositoryUserAction<UsersLikes> userLikes { get; }
+		public IUsersHistory<History> history { get; }
 		public Task Save();
 	}
 }

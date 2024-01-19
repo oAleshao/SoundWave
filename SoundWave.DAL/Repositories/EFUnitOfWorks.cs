@@ -1,4 +1,5 @@
-﻿using SoundWave.DAL.Context;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using SoundWave.DAL.Context;
 using SoundWave.DAL.Entities;
 using SoundWave.DAL.Interfaces;
 using System;
@@ -17,6 +18,7 @@ namespace SoundWave.DAL.Repositories
 		private SongRepository songRepository;
 		private UserRepository userRepository;
 		private UsersLikesRepository usersLikesRepository;
+		private HistoryRepository historyRepository;
 
 		public EFUnitOfWorks(SoundWaveContext db)
 		{
@@ -73,6 +75,15 @@ namespace SoundWave.DAL.Repositories
 			}
 		}
 
+		public IUsersHistory<History> history
+		{
+			get
+			{
+				if(historyRepository == null)
+					historyRepository = new HistoryRepository(db);
+				return historyRepository;
+			}
+		}
 		public async Task Save()
 		{
 			await db.SaveChangesAsync();
