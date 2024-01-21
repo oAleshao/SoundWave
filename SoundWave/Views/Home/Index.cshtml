@@ -1,8 +1,243 @@
-﻿@{
+﻿@model SoundWave.Models.HomeModel;
+
+@{
     ViewData["Title"] = "Home Page";
+    Context.Request.Cookies.TryGetValue("userFullNameSoundWave", out string FullName);
+    Context.Request.Cookies.TryGetValue("userLoginSoundWave", out string value);
+    string shortTittle = string.Empty;
+    string shortExecutor = string.Empty;
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="profileContextMenu">
+
+    <h3>@FullName</h3>
+    <h3>@value</h3>
+    <div id="myHr"></div>
+    <div>
+        <ul>
+            <li>
+                <a asp-action="Index" asp-controller="WaveStudio">
+                    <img src="~/img/SoundWaveLogo1.svg" />
+                    <h2>WaveStudio</h2>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <img src="~/img/account.png" />
+                    <h2>Аккаунт</h2>
+                </a>
+            </li>
+            <li>
+                <a asp-action="LogOut" asp-controller="Account" asp-route-currentSong.id="@Model.currentSong?.Id">
+                    <img src="~/img/logout.png" />
+                    <h2>Выйти</h2>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="myHr"></div>
+    <div id="aboutSoundWave">
+        <p>SoundWave - платформа для прослушивания музыки</p>
+    </div>
 </div>
+
+<main role="main">
+
+
+    <section id="sideBar" class="hiddenSideBar">
+        <ul>
+            <li>
+                <a asp-action="Index" asp-controller="Home">
+                    <div>
+                        <img src="~/img/home.png" />
+                        <h2>Главная</h2>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <div>
+                        <img src="~/img/playlist.png" />
+                        <h2>Плейлисты</h2>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div id="hrSideBar" class="hiddenHrSideBar"></div>
+        <a id="btnAddNewPlaylist" class="hiddenHrSideBar">
+            <div>
+                <img src="~/img/plus.png" />
+                <h2>Создать</h2>
+            </div>
+        </a>
+    </section>
+
+    <section id="AudioAndVideo">
+
+        @if (Model.UserChooseVideo)
+        {
+            <div id="btnAudio_Video" class="activeVideo">
+                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@false">Трек</a>
+                <a class="activeA" asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@true">Видео</a>
+            </div>
+
+        }
+        else
+        {
+            <div id="btnAudio_Video" class="activeAudio ">
+                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@false" class="activeA">Трек</a>
+                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@true">Видео</a>
+            </div>
+        }
+
+
+
+        @if (Model.UserChooseVideo && Model.currentSong.videoHref != null && Model.currentSong.videoHref != "")
+        {
+            <div id="imgOrVideo">
+                <video id="videoPlayer" src="@Model.currentSong.videoHref"></video>
+            </div>
+        }
+        else
+        {
+            <div id="imgOrVideo" class="activeSong">
+                <div id="myShadowOnImage"></div>
+                <img src="@Model?.currentSong?.preview" />
+            </div>
+        }
+    </section>
+
+    <section id="mainBODY" class="prokrutka">
+        @foreach (var song in Model.Songs)
+        {
+            if (song.Title.Length > 30 || song.Executor.Length > 30)
+            {
+                shortTittle = song.Title.Substring(0, 30);
+                shortTittle += "...";
+                shortExecutor = song.Executor.Substring(0, 30);
+                shortExecutor += "...";
+            }
+            else
+            {
+                shortTittle = song.Title;
+                shortExecutor = song.Executor;
+            }
+
+
+            if (Model.currentSong != null && song.Id == Model.currentSong.Id)
+            {
+                <a asp-action="PlaySong" asp-controller="Home" asp-route-id="@song.Id" asp-route-UserChooseVideo="@Model.UserChooseVideo" class="songV chooseSong">
+                    <img src="@song.preview" />
+                    <div>
+                        <div><h2>@shortTittle</h2></div>
+                        <div><p>@shortExecutor</p></div>
+                    </div>
+                    <h2 class="DurationList" id="currentSongDuration">@song.duration</h2>
+                </a>
+            }
+            else
+            {
+                <a asp-action="PlaySong" asp-controller="Home" asp-route-id="@song.Id" asp-route-UserChooseVideo="@Model.UserChooseVideo" class="songV">
+                    <img src="@song.preview" />
+                    <div>
+                        <div><h2>@shortTittle</h2></div>
+                        <div><p>@shortExecutor</p></div>
+                    </div>
+                    <h2 class="DurationList">@song.duration</h2>
+                </a>
+            }
+        }
+    </section>
+</main>
+
+
+<div id="player">
+    <div id="progressBar">
+        <div id="secondProgressBar">
+            <div @* id="spansCurrentTime" *@ class="currentTime show">
+                @* <span class="currentTime show">0:34</span> *@
+            </div>
+            <input type="range" class="ranger hiddenThumb" />
+            <div class="fill"></div>
+        </div>
+        <audio id="audioPlayer" src="@Model.currentSong?.Href"></audio>
+    </div>
+    <div id="NextPrevPlayBtn">
+        <a asp-route-id="@Model.previousSong" id="previousBtn">
+            <img src="/img/previous.png" />
+        </a>
+        <div id="playbtn">
+            <img id="playbtnImg" src="/img/play.png" />
+        </div>
+        <a asp-route-id="@Model.nextSong" id="nextBtn">
+            <img src="/img/next.png" />
+        </a>
+    </div>
+    <div id="Duration">
+        <p id="currentTime">0:00</p>
+        <p>/</p>
+        <p id="durationTime">@Model.currentSong?.duration</p>
+    </div>
+    <div id="InfoAboutSong">
+        <div id="aboutSong">
+            <div>
+                <img src="@Model.currentSong?.preview" />
+            </div>
+            <div>
+                @if (Model.currentSong?.Title.Length > 30 || Model.currentSong?.Executor.Length > 30)
+                {
+                    shortTittle = Model.currentSong?.Title.Substring(0, 30);
+                    shortTittle += "...";
+                    shortExecutor = Model.currentSong?.Executor.Substring(0, 30);
+                    shortExecutor += "...";
+                }
+                else
+                {
+                    shortTittle = Model.currentSong?.Title;
+                    shortExecutor = Model.currentSong?.Executor;
+                }
+                <h2>@shortTittle</h2>
+                <h2>@shortExecutor</h2>
+            </div>
+        </div>
+        <div id="moreAndLikeDislike">
+            <button id="likebtn">
+                <img src="~/img/like.svg" />
+            </button>
+            <button id="dislikebtn">
+                <img src="~/img/dislike.svg" />
+            </button>
+            <button id="morebtn">
+                <img src="~/img/more.png" />
+            </button>
+        </div>
+    </div>
+    <div id="VolumeRepeatBtn">
+        <div id="VolumeDiv">
+            <input id="volumeRange" type="range" value="100" class="hiddenInputVolume" />
+            <div id="volumeBtn">
+                <img src="~/img/volumeOn.png" id="volumeIcon" />
+            </div>
+        </div>
+        <div>
+            <div id="RepeatBtn">
+                <img src="~/img/repeat.png" id="RepeatBtnImg" />
+            </div>
+        </div>
+        <div>
+            <div id="openClosePlaylist">
+                <img src="~/img/arrowDown.png" id="openCloseBtnImg" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* <section style="visibility: hidden;">
+    <form asp-action="PlaySong" id="nextSongUseJs">
+        <input asp-for="nextSong" />
+        <input asp-for="nextBtnJsWork" type="checkbox" checked />
+        <input type="submit" />
+    </form>
+</section> *@

@@ -11,7 +11,7 @@ namespace SoundWave.BLL.Infrastructure
 {
 	public static class SoundWaveExtensions
 	{
-		public static void AddSoccerContext(this IServiceCollection services, string connection)
+		public static void AddSoundWaveContext(this IServiceCollection services, string connection)
 		{
 			services.AddDbContext<SoundWaveContext>(options => options.UseSqlServer(connection));
 		}

@@ -1,7 +1,22 @@
+using SoundWave.BLL.Interfaces;
+using SoundWave.BLL.Services;
+using SoundWave.BLL.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddSoundWaveContext(connection);
+builder.Services.AddUnitOfWorkService();
+builder.Services.AddTransient<IGanreService, GanreService>();
+builder.Services.AddTransient<IPlaylistService, PlaylistService>();
+builder.Services.AddTransient<IUserLikesService, UserLikesService>();
+builder.Services.AddTransient<ISongService, SongService>();
+builder.Services.AddTransient<IHistoryService, HistoryService>();
+builder.Services.AddTransient<IUserService, UserService>();
+
 
 var app = builder.Build();
 

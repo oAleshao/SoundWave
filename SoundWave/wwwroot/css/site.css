@@ -1,22 +1,1915 @@
-html {
-  font-size: 14px;
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
 }
 
-@media (min-width: 768px) {
-  html {
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+#timeToolTip{
+    width: 100%;
+    display: flex;
+}
+/*/////////     HEADER     /////////*/
+header {
+    width: 100%;
+    height: 80px;
+    position: sticky;
+    background: #030303;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.5px solid gray;
+}
+
+header section:nth-child(1){
+    width: 200px;
+    display: flex;   
+    position: relative; 
+}
+
+.btnSideBarStyle {
+    width: 70px;
+}
+
+header section:nth-child(1) div:nth-child(1) div {
+    margin: 18px 3px 0px 20px;
+    width: 40px;
+    height: 40px;
+    border: 0px;
+    background: transparent;
+}
+
+#btnSideBar:active {
+    border: 1px solid gray;
+}
+
+header section:nth-child(1) div:nth-child(1) div img {
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+    margin: 5px 0px 0px 6px;
+}
+
+header section:nth-child(1) div:nth-child(1) div:hover {
+    background: #2e2e2e;
+    border-radius: 20px;
+}
+
+header section:nth-child(1) div:nth-child(2){
+    margin: 8px 0px 0px 10px;
+}
+
+#IconTitle img {
+    margin: 0px 0px 0px 8px;
+    width: 80px;
+    height: 40px;
+}
+
+#IconTitle h2 {
+    color: white;
+    font-family: 'Kanit', sans-serif;
+    /*font-family: 'Archivo', sans-serif;*/
+    font-size: 18px;
+}
+
+header section:nth-child(2){
+    flex-basis: 40%;
+    text-align: right;
+    height: 80px;
+}
+
+#signInA {
+    width: 80px;
+    height: 30px;
+    color: #030303;
     font-size: 16px;
-  }
+    padding: 1px 10px 0px 10px;
+    background: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    text-decoration: none;
+    margin: 20px 50px 0px 0px;
+    text-align: center;
+    float: right;
+    transition: 0.3s;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+#signInA:hover{
+    color: white;
+    background: #030303;
+    transition: 0.3s;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+
+/*/////////////////     Menu profileData      //////////////////////*/
+
+#profileMenu {
+    padding: 20px 50px 0px 0px;
 }
+
+#profileMenu img{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+#profileMenu img:hover{
+    opacity: 0.6;
+}
+
+#profileMenu img:active{
+    border: 1px solid white;
+}
+
+.profileContextMenu{
+    position: fixed;
+    display:none;
+    width: 300px;
+    height: 350px;
+    background: #2c2c2c;
+    border-radius: 10px;
+
+}
+
+.profileContextMenu.active {
+    display: block;
+}
+
+.profileContextMenu h3{
+    color: white;
+    text-align: left;
+}
+
+.profileContextMenu h3:nth-child(1){
+    font-size: 24px;
+    padding: 15px 0px 0px 20px;
+}
+.profileContextMenu h3:nth-child(2){
+    font-size: 16px;
+    padding: 0px 0px 0px 20px;
+}
+
+#myHr  {
+    margin: 20px 0px 5px 0px;
+    height: 0.2px;
+    background: white;
+}
+
+.profileContextMenu ul{
+    text-align: left;
+    padding: 0;
+    margin: 15px 0px 0px 0px;
+}
+
+.profileContextMenu ul li{    
+    list-style:none;
+}
+
+.profileContextMenu ul li a{
+    display: flex;
+    height: 40px;
+    text-decoration: none;
+}
+
+.profileContextMenu ul li a:hover{
+    background: #626262;
+    width: 100%;
+}
+
+.profileContextMenu div ul li:nth-child(1) a img{
+    width: 40px;
+    height: 20px;
+    margin: 10px 0px 0px 20px;
+}
+
+.profileContextMenu div ul li:nth-child(1) a h2 {
+   padding: 7px 0px 0px 20px;
+}
+
+
+.profileContextMenu div ul li a img{
+    width: 25px;
+    height: 25px;
+    margin: 7px 0px 0px 30px;
+}
+
+.profileContextMenu div ul li a h2{
+    color: white;
+    padding: 7px 0px 0px 25px;
+    font-size: 18px;
+}
+
+#aboutSoundWave p{
+    text-align: left;
+    color: white;
+    font-size: 12px;
+    padding: 20px 5px 0px 20px;
+}
+
+/*///////////////     SideBar  ////////////////////*/
+#sideBar {
+    height: 82.4vh;
+    border-right: 0.5px solid gray;
+    position: sticky;
+}
+
+#sideBar ul {
+    padding: 0px 0px 0px 8px;
+}
+
+
+#sideBar ul li a{
+    text-decoration: none;
+}
+
+#sideBar ul li:nth-child(1) a div{
+    margin-top: 15px;
+}
+
+.hiddenSideBar {
+    width: 90px;
+}
+
+.hiddenSideBar ul li {
+    list-style: none;
+    width: 60px;
+}
+
+
+.hiddenSideBar ul li a div{
+    height: 75px;
+    width: 70px;
+    padding: 2px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+
+.hiddenSideBar ul li a div img {
+    margin: 10px 0px 0px 0px;
+    width: 25px;
+    height: 28px;
+}
+
+.hiddenSideBar ul li a div h2{
+    color: white;
+    font-size: 11px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 6px 0px 0px 0px;
+}
+
+.hiddenSideBar ul li a div:hover{
+    background: #2e2e2e;
+}
+
+.hiddenSideBar ul li a div:active{
+    border: 1px solid gray;
+}
+
+
+.visibleSideBar {
+    width: 240px;
+}
+
+.visibleSideBar ul li{
+    list-style: none;
+}
+
+.visibleSideBar ul li a div {
+    height: 55px;    
+    width: 205px;
+    border-radius: 12px;
+    display: flex;
+    margin: 12px 0px 0px 10px;
+}
+
+
+.visibleSideBar ul li a div img {
+    margin: 12px 0px 0px 20px;
+    width: 25px;
+    height: 28px;
+}
+
+.visibleSideBar ul li a div h2{
+    color: white;
+    margin: 12px 12px 12px 20px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 6px 0px 0px 0px;
+    
+}
+
+.visibleSideBar ul li a div:hover{
+    background: #2e2e2e;
+}
+
+.visibleSideBar ul li a div:active {
+    border: 1px solid gray;
+}
+
+
+.hiddenHrSideBar{
+    visibility: hidden;
+}
+
+.visibleHrSideBar {
+    color: gray;
+    border-bottom: 0.5px solid gray;
+    width: 200px;
+    margin: auto;
+}
+
+.visibleAddPlaylist {
+    text-decoration: none;
+}
+
+.visibleAddPlaylist div {
+    width: 200px;
+    height: 35px;
+    background: #3e3e3e;
+    display: flex;
+    border-radius: 30px;
+    justify-content: center;
+    margin: 12px auto;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.visibleAddPlaylist div:hover{
+    background: #2e2e2e;
+}
+
+.visibleAddPlaylist div:active{
+    border: 1px solid gray;
+}
+
+
+.visibleAddPlaylist div img{
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+
+.visibleAddPlaylist div h2{
+   color: white;
+   font-size: 16px;
+   padding: 2px;
+    
+}
+
+
+/*////////////////////       SignIn, Register    /////////////////////*/
+
+#bodySignIn {
+    width: 100%;
+    background-image: url("/img/Group 17.svg");
+    background-size: 1300px;
+}
+
+#btnSignInUp{
+    display: flex;
+    margin: 30px 0px 0px 20px;
+    width: 230px;
+    justify-content: flex-start;
+}
+
+#btnSignInUp div{
+    margin: 0px 0px 0px 30px;
+}
+
+
+#btnSignInUp div span{
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+
+#btnSignInUp div a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+#formSignIn, #formRegister {
+    border: 5px solid black;
+    border-radius: 45px;
+    margin: 100px auto;
+    background: #a5582c;
+    width: 380px;
+    height: 500px;
+}
+
+#formRegister{
+    height: 600px;
+}
+
+#formSignIn form, #formRegister form {
+    margin: 50px auto;
+    width: 340px;
+}
+
+#formSignIn form div, #formRegister form div{
+    padding: 10px 15px 0px 20px;
+    position: relative;
+}
+
+#formSignIn form label, #formRegister form label{
+    color: white;
+    padding: 10px 0px 0px 15px;
+}
+
+#formSignIn form input:nth-child(2), #formRegister form input:nth-child(2) {
+    width: 300px;
+    border: 0px;
+    border-radius: 30px;
+    background: #ecc194;
+}
+
+#signInBtnSumbmit {
+    background: #462214;
+    width: 300px;
+    border: 0px;
+    border-radius: 30px;
+    color: white;
+    margin: 30px 0px 0px 0px;
+    padding: 5px;
+}
+
+
+#signInBtnSumbmit:hover {
+    background: #3c190b;
+}
+
+#signInBtnSumbmit:active {
+   border: 1px solid #1f0b02;
+}
+
+
+/*////////////////////    BODY main   //////////////////*/
+
+#BODY{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+main {
+    display: flex;
+    height: 82.4vh;
+}
+
+#Cookies {
+    position: absolute;
+    width: 600px;
+    height: 300px;
+    background: white;
+    border: 3px solid #a5582c;
+    border-radius: 20px;
+    background: #ecc194;
+    display: flex;
+    top: 180px;
+    left: 500px;
+    visibility: hidden;
+}
+
+
+#Cookies div:nth-child(1){
+    flex-basis: 80%;
+    padding: 60px 0px 0px 35px;
+}
+
+#Cookies div img{
+    margin: auto;
+    width: 150px;
+    height: 150px;
+}
+
+#Cookies div:nth-child(2){
+    padding: 60px 0px 0px 0px;
+}
+
+#Cookies div h2{
+    text-align: center;
+    font-size: 25px;
+    padding: 10px 35px 0px 0px;
+}
+
+#Cookies div p{
+    text-align: center;
+    font-size: 16px;
+    padding: 5px 35px 0px 0px;
+}
+
+#Cookies div a{
+    margin: 0px 100px 100px 70px;
+    color: white;
+    border-radius: 10px;
+    background: black;
+    padding: 2px 50px 5px 50px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#Cookies div a:hover{
+   color: #c3c3c3;
+   background: #262626;
+   transition: 0.3s;
+}
+
+#Cookies div a:active{
+    border: 2px solid white;
+}
+
+.colorError {
+    color: #500707;
+    font-size: 15px;
+    margin-left: 15px;
+    position: absolute;
+    top: 80px;
+    z-index: 4;
+}
+
 
 body {
-  margin-bottom: 60px;
+    background: #030303;
 }
+
+#bodyError {
+    width: 100%;
+    background-image: url("/img/Group 30.svg");
+    background-size: 1700px;
+}
+
+/*//////////////     Style List Songs       ////////////////////*/
+
+#AudioAndVideo{
+    width: 780px;
+}
+
+.activeAudio {
+    width: 180px;
+    display: flex;
+    background: #444444;
+    border-radius: 15px;
+    margin: 27px auto 0px auto; 
+}
+
+.activeAudio a {
+    color: white;
+    font-weight: bold;
+    flex-basis: 50%;
+}
+
+.activeAudio  a:nth-child(1) {
+    padding: 2px 0px 4px 30px;
+}
+
+.activeAudio  a:nth-child(2) {
+    padding: 2px 0px 4px 10px;
+}
+
+.activeSong {
+    width: 550px;
+    margin: 30px auto 0px auto;
+}
+
+.activeSong img {
+    width: 550px;
+    height: 550px;
+}
+
+.activeVideo {
+    width: 180px;
+    display: flex;
+    background: #444444;
+    border-radius: 15px;
+    margin: 27px auto 0px auto; 
+}
+
+.activeVideo  a {
+    color: white;
+    font-weight: bold;
+    flex-basis: 50%;
+}
+
+.activeVideo   a:nth-child(1) {
+    padding: 2px 0px 4px 30px;
+}
+
+.activeVideo   a:nth-child(2) {
+    padding: 2px 0px 4px 20px;
+}
+
+#btnAudio_Video a{
+    text-decoration: none;
+}
+
+
+
+#imgOrVideo video{
+    width: 700px;
+    margin: 110px 0px 0px 40px;
+}
+
+
+#myShadowOnImage {
+    position: absolute;
+    width: 550px;
+    height: 550px;
+    transition: 0.3s;
+}
+
+#myShadowOnImage:hover {
+    box-shadow: inset 0 0 100px rgb(0, 0, 0, 0.9);
+    transition: 0.3s;
+}
+
+
+
+#mainBODY {
+    margin: 20px 0px 0px 15px;
+}
+
+.activeA {
+    text-decoration: none;
+    background: #878787;
+    border-radius: 15px;
+}
+
+.chooseSong{
+    background:#303030;
+}
+
+.prokrutka {
+    overflow: auto;
+}
+
+.songV {
+    width: 500px;
+    height: 55px;
+    display: flex;
+    border-bottom: 1px solid #6d6d6d;
+    text-decoration: none;
+}
+
+.songV:hover{
+    background: #282727;
+}
+
+.songV img{
+    margin: 7px 10px 0px 20px;
+    width: 40px;
+    height: 40px;
+}
+
+.songV div{
+    margin: 0px 0px 0px 10px;
+    width: 350px;
+}
+
+.songV div div h2{
+    padding: 6px 0px 0px 0px;
+    height: 10px;
+    color: white;
+    font-size: 16px;
+}
+
+
+.songV div div p{
+    padding: 6px 0px 0px 0px;
+    color: white;
+    font-size: 14px;
+}
+
+.DurationList {
+    color: white;
+    font-size: 16px;
+    text-align: right;
+    padding: 16px 0px 0px 0px;
+}
+
+
+
+/*/////////////////   Player   //////////////////*/
+#player {
+    width: 100%;
+    height: 8vh;
+    background: #3e3e3e;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/*// ProgressBar //*/
+#progressBar {
+    width: 100%;
+    background: #626161;
+    height: 4px;
+    position: relative;
+}
+
+
+
+#secondProgressBar{
+    position: relative;
+    width: 100%;
+    height: 4px;
+    display: flex;
+}
+
+#spansCurrentTime{
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    margin-top: -30px;
+    background: violet;
+}
+
+.ranger {
+    position: absolute;
+    -webkit-appearance: none;
+    outline: none;
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+
+.ranger::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border-radius: 10px;
+    background-color: #ecba09;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    transition: 0.3s;
+    opacity: 1;
+}
+
+.currentTime{
+    position: absolute;
+    margin-top: -35px;
+    background: #2e2e2e;
+    height: 28px;
+    color: white;
+    font-size: 14px;
+    padding: 4px 10px 0px 10px;
+    border-radius: 2px;
+    opacity: 1;
+    transition: 0.1s;
+}
+
+.show {
+    opacity: 0;
+    transition: 0.1s;
+}
+
+.fill {
+    width: 10px;
+    height: 4px;
+    background-color: #ecba09;
+    position: absolute;
+}
+
+.hiddenThumb::-webkit-slider-thumb {
+    opacity: 0;
+    transition: 0.3s;
+}
+/*////  Button like Next, Previous, Pause/Play ///*/
+
+#NextPrevPlayBtn {
+    display: flex;
+    justify-content: space-evenly;
+    flex-basis: 12%;
+    height: 60px;
+}
+
+#NextPrevPlayBtn a{
+    margin: auto;
+}
+
+#previousBtn {
+    background: transparent;
+    border: 0px;
+}
+
+#previousBtn img {
+    width: 20px;
+}
+
+#previousBtn img:hover {
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+#playbtn {
+    background: transparent;
+    border: 0px;
+    cursor: pointer;
+}
+
+#playbtn img{
+    width: 25px;
+    margin: 20px 0px 0px 0px;
+}
+
+#playbtn img:hover {
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+#nextBtn {
+    background: transparent;
+    border: 0px;
+}
+
+#nextBtn img{
+    width: 20px;
+}
+
+#nextBtn img:hover {
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+
+/*//// Duration 0:00 - 1:53  ////*/
+#Duration {
+    display: flex;
+    justify-content: space-evenly;
+    flex-basis: 5%;
+    height: 60px;
+}
+
+#Duration p{
+    color: white;
+    text-align: center;
+    vertical-align: central;
+    font-size: 13px;
+    margin: 24px 0px 0px 10px;
+}
+
+
+/*//////  More info about song, btn like, dislike, more  //////*/
+
+#InfoAboutSong {
+    display: flex;
+    justify-content: center;
+    flex-basis: 60%;
+    height: 60px;
+}
+
+#aboutSong {
+    flex-basis: 60%;
+    display: flex;
+    justify-content:flex-start;
+}
+
+#aboutSong div:nth-child(1){
+    width: 120px;
+    margin: 0px 0px 0px 60px;
+}
+
+#aboutSong div img{
+    margin: 11px 0px 0px 60px;
+    width: 40px;
+    height: 40px;
+}
+
+#aboutSong div h2 {
+    color: white;
+    font-family: 'Kanit', sans-serif;
+    height: 5px;
+}
+
+#aboutSong div h2:nth-child(1){
+    font-size: 18px;
+    padding: 10px 0px 0px 0px;
+    flex-wrap: nowrap;
+}
+
+
+#aboutSong div h2:nth-child(2){
+    font-size: 16px; 
+    padding: 14px 0px 0px 0px;
+}
+
+#moreAndLikeDislike {
+    display: flex;
+    flex-basis: 20%;
+    justify-content: space-evenly;
+}
+
+#morebtn{
+    width: 35px;
+    height: 35px;
+    margin: 22px 0px 0px 0px;
+    padding: 0px 0px 5px 0px;
+}
+
+#likebtn, #dislikebtn, #morebtn {
+    background: transparent;
+    border: 0px;
+}
+
+#likebtn img, #dislikebtn img{
+    width: 24px;
+    height: 24px;
+}
+
+#morebtn{
+    margin: 14px 0px 0px 0px;
+}
+
+#morebtn img {
+    width: 15px;
+    height: 15px;    
+    margin: 0px 0px 0px 0px;
+}
+
+#likebtn img:hover, #dislikebtn img:hover{
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+#morebtn:hover{
+    background: #2e2e2e;
+    border-radius: 20px;
+}
+
+/*///////  
+    button and volume  ////////*/
+
+#VolumeRepeatBtn {
+    flex-basis: 22%;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#VolumeDiv {
+    display: flex;
+    margin: 0px 10px 0px 0px;
+}
+
+#VolumeDiv input{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 5px;
+    background: gray;
+    margin: 28px 20px 0px 0px;
+    transition: 0.5s;
+}
+
+#VolumeDiv input[type=range]::-webkit-slider-runnable-track {
+    border-radius: 30px;
+    height: 4px;
+    background-color: #fff;
+}
+
+
+#VolumeDiv input[type=range]::-webkit-slider-thumb {
+    background: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    -webkit-appearance: none;
+    margin-top: -4px;
+}
+
+.hiddenInputVolume {
+    transition: 0.5s;
+    opacity: 0;
+}
+
+#volumeBtn, #RepeatBtn, #openClosePlaylist {
+    border: 0px;
+    background: transparent;
+}
+
+#openClosePlaylist {
+    margin: 16px 0px 0px 0px;
+}
+
+#RepeatBtn{
+    margin: 16px 0px 0px 5px;
+}
+
+#volumeBtn img{
+    width: 25px;
+    height: 25px;
+    margin: 19px 0px 0px 0px;
+    cursor: pointer;
+}
+
+#volumeBtn img:hover .hiddenInputVolume{
+    visibility: visible;
+}
+
+#RepeatBtn img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+#openClosePlaylist img {
+    width: 15px;
+    height: 12px;
+    cursor: pointer;
+    margin: 0px 30px 0px 25px;
+}
+/*========================================================
+                   WaveStudioStyle
+========================================================*/
+/*///////////////     SideBar  ////////////////////*/
+/*#sideBarWaveStudio {
+    height: 90vh;
+    border-right: 0.5px solid gray;
+}
+
+#sideBarWaveStudio ul {
+    padding: 0px 0px 0px 8px;
+}
+
+
+#sideBarWaveStudio ul li a{
+    text-decoration: none;
+}
+
+#sideBarWaveStudio ul li:nth-child(1) a div{
+    margin-top: 15px;
+}
+
+.hiddenSideBar {
+    width: 90px;
+}
+
+.hiddenSideBar ul li {
+    list-style: none;
+    width: 60px;
+}
+
+
+.hiddenSideBar ul li a div{
+    height: 75px;
+    width: 70px;
+    padding: 2px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.hiddenSideBar ul li:nth-child(4) a div h2{
+    font-size: 10px;
+}
+
+
+
+.hiddenSideBar ul li a div img {
+    margin: 10px 0px 0px 0px;
+    width: 25px;
+    height: 28px;
+}
+
+.hiddenSideBar ul li a div h2{
+    color: white;
+    font-size: 11px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 6px 0px 0px 0px;
+}
+
+.hiddenSideBar ul li a div:hover{
+    background: #757575cf;
+}
+
+.hiddenSideBar ul li a div:active{
+    border: 1px solid gray;
+}
+
+
+.visibleSideBar {
+    width: 240px;
+}
+
+.visibleSideBar ul li{
+    list-style: none;
+}
+
+
+.visibleSideBar ul li a div {
+    height: 55px;    
+    width: 210px;
+    border-radius: 12px;
+    display: flex;
+}
+
+
+.visibleSideBar ul li a div img {
+    margin: 12px 0px 0px 20px;
+    width: 25px;
+    height: 28px;
+}
+
+.visibleSideBar ul li a div h2{
+    color: white;
+    margin: 12px 12px 12px 30px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 6px 0px 0px 0px;
+    
+}
+
+.visibleSideBar ul li a div:hover{
+    background: #757575cf;
+}
+
+.visibleSideBar ul li a div:active {
+    border: 1px solid gray;
+}
+
+
+.hiddenHrSideBar{
+    visibility: hidden;
+}
+
+.visibleHrSideBar {
+    color: gray;
+    border-bottom: 0.5px solid gray;
+    width: 200px;
+    margin: auto;
+}
+
+
+
+.chooseView {
+    background: #2f2f2f;
+}*/
+/*////////////////  WaveStudio GanresStyle   ///////////////*/
+
+/*#mainWaveStudioGanres {
+    display: flex;
+    
+}
+
+#fieldGanresAdd {
+    height: 90vh;
+    flex-basis: 60%;
+}
+
+#fieldGanresAdd h2{
+    color: white;
+    padding: 15px 0px 0px 30px;
+}
+
+
+#fieldGanresAdd div{
+    width: 300px;
+    height: 300px;
+    margin: 30px 0px 0px 100px;
+}
+
+#fieldGanresAdd div form div{
+    width: 300px;
+    height: 70px;
+    margin: auto;
+}
+
+#fieldGanresAdd div form div:nth-child(2) input{
+    width: 110px;
+    border: 0px;
+    background: white;
+    border-radius: 10px;
+    margin: 9px 0px 0px 190px;
+    padding: 3px;
+    transition: 0.3s;
+    border: 1px solid white;
+}
+
+#fieldGanresAdd div form div:nth-child(2) input:hover{
+   background: #030303;
+   border: 1px solid white;
+   color: white;
+   transition: 0.3s;
+}
+
+
+#fieldGanresAdd div form div label{
+    font-size: 18px;
+    color: white;
+}*/
+
+/*//// Edit ////*/
+
+
+/*#fieldGanresEdit {
+    height: 90vh;
+    flex-basis: 60%;
+}
+
+#fieldGanresEdit h2{
+    color: white;
+    padding: 15px 0px 0px 30px;
+}
+
+
+#fieldGanresEdit div{
+    width: 300px;
+    height: 300px;
+    margin: 30px 0px 0px 100px;
+}
+
+#fieldGanresEdit div form div{
+    width: 300px;
+    height: 70px;
+    margin: auto;
+}
+
+#fieldGanresEdit div form div:nth-child(2){
+    position: relative;
+}
+
+#fieldGanresEdit div form span{
+    width: 100%;
+    position: absolute;
+    top: 17px;
+    left: 6px;
+}
+
+#fieldGanresEdit div form div:nth-child(3){
+    display: flex;
+}
+
+#fieldGanresEdit div form div:nth-child(3) a{
+    width: 110px;
+    height: 30px;
+    padding: 3px;
+    text-align: center; 
+    color: #030303;
+    border-radius: 10px;
+    background: white;
+    margin: 9px 0px 0px 10px;
+    text-decoration: none;
+    border: 1px solid white;
+    transition: 0.3s;
+}
+
+
+#fieldGanresEdit div form div:nth-child(3) a:hover{
+    background: #490a0a;
+   border: 1px solid white;
+   color: white;
+   transition: 0.3s;
+}
+
+
+
+#fieldGanresEdit div form div:nth-child(3) input{
+    width: 110px;
+    height: 30px;    
+    background: white;
+    border: 0px;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 9px 0px 0px 80px;
+    border: 1px solid white;
+    transition: 0.3s;
+}
+
+#fieldGanresEdit div form div:nth-child(3) input:hover{
+   background: #030303;
+   border: 1px solid white;
+   color: white;
+   transition: 0.3s;
+}
+
+
+#fieldGanresEdit div form div label{
+    font-size: 18px;
+    color: white;
+}*/
+
+
+/*////////   Remove  ////////*/
+
+
+/*#fieldGanresRemove{
+    flex-basis: 60%;
+}
+
+#fieldGanresRemove h2{
+    color: white;
+    font-size: 25px;
+    padding: 100px 0px 0px 100px;
+}
+
+#fieldGanresRemove div{
+    margin: 40px auto;
+}
+
+#fieldGanresRemove div form input{
+     width: 110px;
+    height: 30px;    
+    background: white;
+    border: 0px;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 9px 0px 0px 0px;    
+   border: 1px solid white;
+   transition: 0.3s;
+}
+
+#fieldGanresRemove div form input:hover{
+     background: #490a0a;
+   border: 1px solid white;
+   color: white;
+   transition: 0.3s;
+}
+
+#fieldGanresRemove div form a{
+    width: 110px;
+    height: 30px;
+    padding: 3px 30px 3px 30px;
+    text-align: center; 
+    color: #030303;
+    border-radius: 10px;
+    background: white;
+    margin: 8px 0px 0px 320px;
+    text-decoration: none;
+    border: 1px solid white;
+    transition: 0.3s;
+}
+
+#fieldGanresRemove div form a:hover{
+   background: #030303;
+   border: 1px solid white;
+   color: white;
+   transition: 0.3s;
+}
+
+
+
+
+#ListGanres {
+    border-left: 0.5px solid gray;
+    height: 90vh;
+    overflow: auto;
+}
+
+#ListGanres div {
+    width: 400px;
+}
+
+#ListGanres h3 {
+    color: white;
+    font-size: 24px;
+    padding: 20px 0px 0px 40px;
+}
+
+#ListGanres div ul{
+    width: 300px;
+    color: #a7a7a7;
+    list-style: none;
+}
+
+#ListGanres div ul li{
+    margin: 0px 0px 0px 20px;
+}
+
+#ListGanres div ul li a {
+    text-decoration: none;
+}
+
+#ListGanres div ul li a div{
+    width: 300px;
+    padding: 0px 0px 7px 20px;
+    border-radius: 10px;
+}
+
+#ListGanres div ul li a div:hover{
+    background: #757575cf;
+}
+
+#ListGanres div ul li h1{
+    color: white;
+    font-size: 16px;
+    width: 300px;
+    padding: 15px 0px 0px 0px;
+}
+
+.chooseGanre{
+    background: #2f2f2f;
+}*/
+
+/*///////////////  WaveStudio UsersStatusStyle   ///////////////////*/
+
+/*#fieldUserStatus{
+    flex-basis: 30%;
+    height: 90vh;
+
+}
+
+#fieldUserStatus div{
+    margin: 10px 0px 0px 30px;
+    height: 70px;
+}
+
+#fieldUserStatus div:nth-child(1){
+    margin: 80px 0px 0px 30px;
+    height: 70px;
+}
+
+#fieldUserStatus div:nth-child(3){
+    margin: 20px 0px 0px 0px;
+}
+
+
+
+#fieldUserStatus div label{
+    color: white;
+    width: 400px;
+    padding: 10px 0px 0px 40px;
+}
+
+#fieldUserStatus div input{
+    height: 30px;
+    width: 250px;
+     margin: 2px 0px 0px 40px;
+}
+
+
+#fieldUserStatus p{
+    color: white;
+    padding: 30px 0px 0px 80px;
+}
+
+
+#fieldUserStatus div a{
+    border: 1px solid white;
+    background: white;
+    border-radius: 10px;
+    color: #030303;
+    padding: 3px 20px 3px 20px;
+    transition: 0.3s;
+    margin: 20px 0px 0px 200px;
+    text-decoration: none;
+}
+
+#fieldUserStatus div a:hover{
+    border: 1px solid white;
+    background: #030303;
+    color: white;
+    transition: 0.3s;
+
+}
+
+
+
+#unauthorizedUsers {
+    flex-basis: 28%;
+    height: 90vh;
+    border-left: 0.5px solid gray;
+}
+
+#unauthorizedUsers h2{
+    color: white;
+    font-size: 24px;
+    padding: 30px 0px 0px 35px;
+}
+
+#unauthorizedUsers ul {
+    width: 350px;
+    list-style: none;  
+    margin: 20px auto;
+    color: #a7a7a7;
+}
+
+#unauthorizedUsers ul li{
+}
+
+#unauthorizedUsers ul li a{
+    text-decoration: none;
+}
+
+#unauthorizedUsers ul li a div{
+    padding: 0px 0px 3px 0px;
+    width: 270px;
+    border-radius: 10px;
+}
+
+#unauthorizedUsers ul li a div:hover{
+    background: #757575cf;
+}
+
+#unauthorizedUsers ul li a div h2{
+    color: white;
+    font-size: 18px;    
+    padding: 8px 0px 2px 20px;
+    
+}
+
+
+#authorizedUsers {
+    flex-basis: 28%;
+    height: 90vh;
+    border-left: 0.5px solid gray;
+}
+
+#authorizedUsers h2{
+    color: white;
+    font-size: 24px;
+    padding: 30px 0px 0px 35px;
+}
+
+#authorizedUsers ul {
+    width: 350px;
+    list-style: none;  
+    margin: 20px auto;
+    color: #a7a7a7;
+}
+
+#authorizedUsers ul li{
+}
+
+#authorizedUsers ul li a{
+    text-decoration: none;
+}
+
+#authorizedUsers ul li a div{
+    padding: 0px 0px 3px 0px;
+    width: 270px;
+    border-radius: 10px;
+}
+
+#authorizedUsers ul li a div:hover{
+    background: #757575cf;
+}
+
+#authorizedUsers ul li a div h2{
+    color: white;
+    font-size: 18px;    
+    padding: 8px 0px 2px 20px;
+    
+}*/
+
+
+/*////////////////  WaveStudio SongsStyle   ///////////////*/
+
+/*#mainWaveStudioSongs {
+    display: flex;
+}*/
+
+
+/*/////   Add  //////*/
+
+/*#fieldSongAdd{
+    flex-basis: 52%;
+    height: 90vh;
+
+}
+
+#fieldSongAdd form{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+#fieldSongAdd form section{
+    padding: 40px 0px 0px 0px;
+    flex-basis: 50%;
+}
+
+#fieldSongAdd form section:nth-child(2) div label {
+    color: white;
+    margin: 0px 0px 0px 30px;
+}
+
+#fieldSongAdd form section:nth-child(2) div {
+    position: relative;
+}
+
+#fieldSongAdd form section:nth-child(2) div span{
+    position: absolute;
+    width: 200px;
+    left: 40px;
+    top: -10px;
+}
+
+#fieldSongAdd form section:nth-child(2) div:nth-child(3) span{
+    left: 110px;
+}
+
+#fieldSongAdd form section:nth-child(2) span{
+    margin: 10px 0px 0px 30px;
+}
+
+#fieldSongAdd form section:nth-child(2) div input {
+    width: 400px;
+    margin: 0px 0px 0px 30px;
+}
+
+#fieldSongAdd form section:nth-child(2) div:nth-child(7){
+    width: 400px;
+    height: 200px;
+    overflow: auto;
+    margin: 0px 0px 0px 30px;
+    
+}
+
+#fieldSongAdd form section:nth-child(2) div:nth-child(7) input {
+    width: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+#fieldSongAdd form section:nth-child(2) div:nth-child(7) label {
+    width: 330px;
+    padding: 0;
+    text-align: left;
+}
+
+
+
+#fieldSongAdd form section:nth-child(3){
+    padding: 40px 0px 0px 0px;
+    flex-basis: 45%;
+}
+
+
+#fieldSongAdd form section:nth-child(3) label{
+    color: white;
+    width: 200px;
+    padding: 0px 0px 2px 50px;
+}
+
+#fieldSongAdd form section:nth-child(3) input{
+    color: white;
+    width: 200px;
+    margin: 3px 0px 0px 50px;
+}
+
+#fieldSongAdd form section:nth-child(3) div input{
+    border: 1px solid white;
+    background: white;
+    color: #030303;
+    border-radius: 10px;
+    width: 200px;
+    margin: 100px 0px 0px 50px;
+    transition: 0.3s;
+}
+
+#fieldSongAdd form section:nth-child(3) div input:hover{
+    transition: 0.3s;
+    background: #030303;
+    color: white;
+}
+
+
+#previewImgSongAdd{
+    width: 200px;
+    height: 200px;
+    border: 0.5px solid black;
+    margin: 0px 0px 0px 50px;
+}
+
+#yourSongsAdd {
+    color: white;
+    font-size: 20px;
+    padding: 10px 0px 0px 20px;
+}*/
+
+
+/*/////   Edit  //////*/
+
+
+/*#fieldSongEdit {
+    flex-basis: 52%;
+    height: 90vh;
+}
+
+#fieldSongEdit form{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+#fieldSongEdit form section:nth-child(2){
+    padding: 20px 0px 15px 30px;
+    flex-basis: 100%;
+}
+
+
+#fieldSongEdit form section:nth-child(2) a{
+    width: 100px;
+    height: 10px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid white;
+    color: #030303;
+    padding: 4px 10px 4px 10px;
+    transition: 0.3s;
+   text-decoration:none;
+}
+
+#fieldSongEdit form section:nth-child(3) a:hover{
+    background: #030303;
+    color: white;
+}
+
+
+
+
+#fieldSongEdit form section:nth-child(3){
+    display: flex;
+    flex-basis: 100%;
+}
+
+#fieldSongEdit form section:nth-child(3) div{
+    margin: 0px 0px 0px 30px;
+    flex-basis: 40%;
+}
+
+#fieldSongEdit form section:nth-child(3) div label{
+    color: white;
+}
+
+#fieldSongEdit form section:nth-child(3) div input{
+    width: 300px;
+}
+
+
+#fieldSongEdit form section:nth-child(4){
+    display: flex;
+    flex-basis: 100%;
+}
+
+#fieldSongEdit form section:nth-child(4) div{
+    margin: 10px 0px 0px 30px;
+    flex-basis: 40%;
+}
+
+#fieldSongEdit form section:nth-child(4) audio{
+    margin: 30px 0px 0px 0px;
+}
+
+#fieldSongEdit form section:nth-child(4) video{
+    margin: 15px 0px 0px 0px;
+    border: 0.1px solid white;
+}
+
+#fieldSongEdit form section:nth-child(4) div label{
+    color: white;
+}
+
+#fieldSongEdit form section:nth-child(4) div input{
+    width: 300px;
+}
+
+#fieldSongEdit form section:nth-child(5) {
+    display: flex;
+    flex-basis: 100%;
+}
+
+#fieldSongEdit form section:nth-child(5) div:nth-child(1){
+    flex-basis: 30%;
+    
+}
+
+#fieldSongEdit form section:nth-child(5) div:nth-child(1) div{
+    width: 310px;
+    height: 200px;
+    overflow: auto;
+    margin: 10px 0px 0px 30px;
+    
+}
+
+#fieldSongEdit form section:nth-child(5) div:nth-child(1) div input {
+    width: 10px;  
+    margin: 0;
+    padding: 0;
+}
+
+#fieldSongEdit form section:nth-child(5) div:nth-child(1) div label {
+    width: 270px;
+    color: white;
+    padding: 0;
+    text-align: left;
+}
+
+#fieldSongEdit form section:nth-child(5) div:nth-child(2) input{
+   margin: 0px 0px 0px 50px;
+   width: 200px;
+   color: white;
+}
+
+#fieldSongEdit form div:nth-child(6){
+    flex-basis: 100%;
+    height: 100px;
+}
+
+
+#fieldSongEdit form div:nth-child(6) input{
+    width: 100px;
+    background: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    transition: 0.3s;
+    color: #030303;
+    margin: 30px 0px 0px 450px;
+}
+
+#fieldSongEdit form div:nth-child(6) a{
+    padding: 1px 20px 1px 20px;
+    background: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    color: #030303;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+#fieldSongEdit form div:nth-child(6) input:hover{
+    background: #030303;
+    color: white;
+    transition: 0.3s;
+}
+
+#fieldSongEdit form div:nth-child(6) a:hover{
+    background: #490a0a;
+    color: white;
+    transition: 0.3s;
+}
+
+#errorGanreEdit{
+    padding: 0px 0px 0px 30px;
+}*/
+
+/*///////  Remove  ////////*/
+/*#songDelete h2, h3 {
+    color: white;
+}
+
+#songDelete h2 {
+    padding: 80px 0px 0px 30px;
+}
+
+#songDelete h3 {
+    padding: 0px 0px 0px 30px;
+}
+
+#songDelete form {
+    margin: 50px 0px 0px 450px;
+    width: 200px;
+}
+
+#songDelete form input{
+    background: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 0px 20px 0px 20px;
+    color: #030303;
+    transition: 0.3s;
+}
+
+#songDelete form input:hover{
+    background: #490a0a;
+    color: white;
+    transition: 0.3s;
+}
+
+
+#songDelete form a{
+    background: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 1px 20px 1px 20px;
+    color: #030303;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+
+#songDelete form a:hover{
+    background: #030303;
+    color: white;
+    transition: 0.3s;
+}
+
+
+#ListSongs {
+    border-right: 0.5px solid gray;
+}
+
+#ListSongs {
+    flex-basis: 34%;
+    overflow: auto;
+    height: 90vh;
+}
+
+#errorPreview{
+    padding: 0px 0px 0px 48px;
+}*/
+

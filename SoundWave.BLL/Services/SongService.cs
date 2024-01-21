@@ -29,7 +29,7 @@ namespace SoundWave.BLL.Services
 				Title = song.Title,
 				Executor = song.Executor,
 				ganres = mapper.Map<IEnumerable<GanreDTO>, IEnumerable<Ganre>>(song.ganres).ToList(),
-				Owner = await Database.users.GetById(song.Owner.Id),
+				Owner = await Database.users.GetById(song.OwnerId),
 				Href = song.Href,
 				videoHref = song.videoHref,
 				preview = song.preview,
@@ -58,13 +58,12 @@ namespace SoundWave.BLL.Services
 			var song = await Database.songs.GetById(id);
 			if (song == null)
 				throw new ValidationException("Wrong song!");
-			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
 			return new SongDTO
 			{
 				Id = song.Id,
 				Title = song.Title,
 				Executor = song.Executor,
-				Owner = mapper.Map<User, UserDTO>( await Database.users.GetById(song.Owner.Id))
+				OwnerId = song.Owner.Id
 			};
 		}
 
@@ -73,19 +72,20 @@ namespace SoundWave.BLL.Services
 			var song = await Database.songs.GetByName(name);
 			if (song == null)
 				throw new ValidationException("Wrong song!");
-			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
 			return new SongDTO
 			{
 				Id = song.Id,
 				Title = song.Title,
 				Executor = song.Executor,
-				Owner = mapper.Map<User, UserDTO>(await Database.users.GetById(song.Owner.Id))
+				OwnerId = song.Owner.Id
 			};
 		}
 
 		public async Task<IEnumerable<SongDTO>> ToList()
 		{
-			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Song, SongDTO>()).CreateMapper();
+			var config = new MapperConfiguration(cfg => cfg.CreateMap<Song, SongDTO>()
+		   .ForMember("OwnerId", opt => opt.MapFrom(c => c.Owner.Id)).ForMember("ganres", opt => opt.MapFrom(c => c.ganres))); ;
+			var mapper = new Mapper(config);
 			return mapper.Map<IEnumerable<Song>, IEnumerable<SongDTO>>(await Database.songs.ToList());
 		}
 
@@ -96,7 +96,7 @@ namespace SoundWave.BLL.Services
 				Id = song.Id,
 				Title = song.Title,
 				Executor = song.Executor,
-				Owner = await Database.users.GetById(song.Owner.Id)
+				Owner = await Database.users.GetById(song.OwnerId)
 			};
 			Database.songs.Update(upSong);
 			await Database.Save();

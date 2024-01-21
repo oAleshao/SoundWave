@@ -11,14 +11,14 @@ namespace SoundWave.DAL.Entities
 		public int Id { get; set; }
 		public string? Title { get; set; }
 		public string? Description { get; set; }
-		public ICollection<Song> songs { get; set; }
-		public ICollection<User> users { get; set; }
+		public ICollection<Song>? songs { get; set; }
+		//public ICollection<User>? users { get; set; }
 		public User? Owner { get; set; }
 		public bool isPublic { get; set; }
 		public Playlist()
 		{
 			songs = new List<Song>();
-			users = new List<User>();
+			//users = new List<User>();
 		}
 	}
 }

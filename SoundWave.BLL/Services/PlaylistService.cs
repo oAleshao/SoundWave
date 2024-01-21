@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +53,7 @@ namespace SoundWave.BLL.Services
 			var playlist = await Database.playlists.GetById(id);
 			if (playlist == null)
 				throw new ValidationException("Wrong playlist!");
-			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
+			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
 			return new PlaylistDTO()
 			{
 				Title = playlist.Title,
@@ -68,7 +69,7 @@ namespace SoundWave.BLL.Services
 			var playlist = await Database.playlists.GetByName(name);
 			if (playlist == null)
 				throw new ValidationException("Wrong playlist!");
-			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
+			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>()).CreateMapper();
 			return new PlaylistDTO()
 			{
 				Title = playlist.Title,
@@ -80,7 +81,9 @@ namespace SoundWave.BLL.Services
 
 		public async Task<IEnumerable<PlaylistDTO>> ToList()
 		{
-			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Playlist, PlaylistDTO>()).CreateMapper();
+			var config = new MapperConfiguration(cfg => cfg.CreateMap<Playlist, PlaylistDTO>()
+		   .ForMember("Owner", opt => opt.MapFrom(c => c.Owner)).ForMember("songs", opt=>opt.MapFrom(c=>c.songs)));
+			var mapper = new Mapper(config);
 			return mapper.Map<IEnumerable<Playlist>, IEnumerable<PlaylistDTO>>(await Database.playlists.ToList());
 		}
 

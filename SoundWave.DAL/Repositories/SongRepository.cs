@@ -49,7 +49,7 @@ namespace SoundWave.DAL.Repositories
 
 		public async Task<IEnumerable<Song>> ToList()
 		{
-			return await db.songs.ToListAsync();
+			return await db.songs.Include(u => u.Owner).Include(g => g.ganres).ToListAsync();
 		}
 
 		public void Update(Song item)

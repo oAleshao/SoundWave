@@ -159,7 +159,7 @@ namespace SoundWave.DAL.Context
 					Owner = user,
 				});
 
-				SaveChangesAsync();
+				SaveChanges();
 			}
 		}
 
