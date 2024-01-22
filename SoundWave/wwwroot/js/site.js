@@ -8,6 +8,8 @@ window.ondblclick = (event) => {
 
 let SideBarStatusStart = localStorage.getItem("statusSiteBar");
 let statusSiteBar = false;
+let header = document.querySelector("header");
+let headerSide = document.querySelector(".sidebarHeader");
 let state = "play";
 let idInterval = 0;
 let tmpwidth = 1;
@@ -24,6 +26,10 @@ let volumeStatus = "Off";
 let minutes = 0;
 let seconds = 0;
 
+//helper variables
+let hrSideBar = null;
+let btnAddNewPlaylist = null
+
 // SideBar
 if (SideBarStatusStart === "true") {
     statusSiteBar = true;
@@ -35,27 +41,45 @@ else {
 function changeStatusSideBar() {
     if (statusSiteBar) {
         sideBar.classList.remove("hiddenSideBar");
-        hrSideBar.classList.remove("hiddenHrSideBar");
-        btnAddNewPlaylist.classList.remove("hiddenHrSideBar");
-        hrSideBar.classList.add("visibleHrSideBar");
         sideBar.classList.add("visibleSideBar");
-        btnAddNewPlaylist.classList.add("visibleAddPlaylist");
+        header.classList.add("headerWithBorder");
         localStorage.setItem("statusSiteBar", true);
         AudioAndVideo.style.margin = "0px 0px 0px 20px";
         AudioAndVideo.style.width = "780px";
         statusSiteBar = false;
+
+        hrSideBar = document.createElement("div");
+        hrSideBar.classList.add("visibleHrSideBar");
+
+        btnAddNewPlaylist = document.createElement("a");
+        btnAddNewPlaylist.classList.add("visibleAddPlaylist");
+        btnAddNewPlaylist.id = "btnAddNewPlaylist";
+        let div_btnAddNewPlaylist = document.createElement("div")
+        let img_div_btnAddNewPlaylist = document.createElement("img");
+        img_div_btnAddNewPlaylist.src = "/img/plus.png";
+        let h2_div_btnAddNewPlaylist = document.createElement("h2");
+        h2_div_btnAddNewPlaylist.textContent = "Создать";
+
+        div_btnAddNewPlaylist.appendChild(img_div_btnAddNewPlaylist);
+        div_btnAddNewPlaylist.appendChild(h2_div_btnAddNewPlaylist);
+        btnAddNewPlaylist.appendChild(div_btnAddNewPlaylist);
+
+        sideBar.appendChild(hrSideBar);
+        sideBar.appendChild(btnAddNewPlaylist);
     }
     else {
         sideBar.classList.remove("visibleSideBar");
-        hrSideBar.classList.remove("visibleHrSideBar");
-        btnAddNewPlaylist.classList.remove("visibleAddPlaylist");
-        hrSideBar.classList.add("hiddenHrSideBar");
+        header.classList.remove("headerWithBorder");
         sideBar.classList.add("hiddenSideBar");
-        btnAddNewPlaylist.classList.add("hiddenHrSideBar");
         localStorage.setItem("statusSiteBar", false);
         AudioAndVideo.style.margin = "0px 0px 0px 130px";
         AudioAndVideo.style.width = "820px";
         statusSiteBar = true
+
+        if (hrSideBar != null) {
+            sideBar.removeChild(hrSideBar);
+            sideBar.removeChild(btnAddNewPlaylist);
+        }
     }
 
 }

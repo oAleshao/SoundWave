@@ -58,19 +58,21 @@
             <li>
                 <a>
                     <div>
+                        <img src="~/img/compass.png" />
+                        <h2>Навигатор</h2>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <div>
                         <img src="~/img/playlist.png" />
-                        <h2>Плейлисты</h2>
+                        <h2>Библиотека</h2>
                     </div>
                 </a>
             </li>
         </ul>
-        <div id="hrSideBar" class="hiddenHrSideBar"></div>
-        <a id="btnAddNewPlaylist" class="hiddenHrSideBar">
-            <div>
-                <img src="~/img/plus.png" />
-                <h2>Создать</h2>
-            </div>
-        </a>
+
     </section>
 
     <section id="AudioAndVideo">
@@ -108,55 +110,63 @@
         }
     </section>
 
-    <section id="mainBODY" class="prokrutka">
-        @foreach (var song in Model.Songs)
-        {
-            if (song.Title.Length > 30 || song.Executor.Length > 30)
+    <section id="mainBODY">
+        <div class="styleNext">
+            <h2>
+                ДАЛЕЕ
+            </h2>
+        </div>
+        <section class="prokrutka">
+            @foreach (var song in Model.Songs)
             {
-                shortTittle = song.Title.Substring(0, 30);
-                shortTittle += "...";
-                shortExecutor = song.Executor.Substring(0, 30);
-                shortExecutor += "...";
-            }
-            else
-            {
-                shortTittle = song.Title;
-                shortExecutor = song.Executor;
-            }
+                if (song.Title.Length > 30 || song.Executor.Length > 30)
+                {
+                    shortTittle = song.Title.Substring(0, 30);
+                    shortTittle += "...";
+                    shortExecutor = song.Executor.Substring(0, 30);
+                    shortExecutor += "...";
+                }
+                else
+                {
+                    shortTittle = song.Title;
+                    shortExecutor = song.Executor;
+                }
 
 
-            if (Model.currentSong != null && song.Id == Model.currentSong.Id)
-            {
-                <a asp-action="PlaySong" asp-controller="Home" asp-route-id="@song.Id" asp-route-UserChooseVideo="@Model.UserChooseVideo" class="songV chooseSong">
-                    <img src="@song.preview" />
-                    <div>
-                        <div><h2>@shortTittle</h2></div>
-                        <div><p>@shortExecutor</p></div>
-                    </div>
-                    <h2 class="DurationList" id="currentSongDuration">@song.duration</h2>
-                </a>
+                if (Model.currentSong != null && song.Id == Model.currentSong.Id)
+                {
+                    <a asp-action="PlaySong" asp-controller="Home" asp-route-id="@song.Id" asp-route-UserChooseVideo="@Model.UserChooseVideo" class="songV chooseSong">
+                        <img src="@song.preview" />
+                        <div>
+                            <div><h2>@shortTittle</h2></div>
+                            <div><p>@shortExecutor</p></div>
+                        </div>
+                        <h2 class="DurationList" id="currentSongDuration">@song.duration</h2>
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="PlaySong" asp-controller="Home" asp-route-id="@song.Id" asp-route-UserChooseVideo="@Model.UserChooseVideo" class="songV">
+                        <img src="@song.preview" />
+                        <div>
+                            <div><h2>@shortTittle</h2></div>
+                            <div><p>@shortExecutor</p></div>
+                        </div>
+                        <h2 class="DurationList">@song.duration</h2>
+                    </a>
+                }
             }
-            else
-            {
-                <a asp-action="PlaySong" asp-controller="Home" asp-route-id="@song.Id" asp-route-UserChooseVideo="@Model.UserChooseVideo" class="songV">
-                    <img src="@song.preview" />
-                    <div>
-                        <div><h2>@shortTittle</h2></div>
-                        <div><p>@shortExecutor</p></div>
-                    </div>
-                    <h2 class="DurationList">@song.duration</h2>
-                </a>
-            }
-        }
+        </section>
     </section>
 </main>
 
+@* <span class="currentTime show">0:34</span> *@
+@* id="spansCurrentTime" *@
 
 <div id="player">
     <div id="progressBar">
         <div id="secondProgressBar">
-            <div @* id="spansCurrentTime" *@ class="currentTime show">
-                @* <span class="currentTime show">0:34</span> *@
+            <div class="currentTime show">
             </div>
             <input type="range" class="ranger hiddenThumb" />
             <div class="fill"></div>

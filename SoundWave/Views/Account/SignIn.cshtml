@@ -1,0 +1,59 @@
+﻿@model SoundWave.Models.LoginModel
+
+@{
+	ViewBag.Title = "SignIn";
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Sound Wave</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/MusicalPortal.styles.css" asp-append-version="true" />
+	<link rel="icon" href="~/img//SoundWaveLogo1.svg" />
+</head>
+<body id="bodySignIn">
+
+	<div id="formSignIn">
+		<section id="btnSignInUp">
+			<div>
+				<span>
+					<a asp-area="" asp-controller="Account" asp-action="SignIn">Вход</a>
+				</span>
+			</div>
+			<div>
+				<a asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+			</div>
+		</section>
+		<form asp-action="SignIn">
+			<div asp-validation-summary="ModelOnly" style="color: #500707;" ></div>
+			<div>
+				<label asp-for="login" class="control-label">Логин</label>
+				<input asp-for="login" class="form-control" />
+				<span asp-validation-for="login" class="colorError" class="text-danger"></span>
+			</div>
+			<div>
+				<label asp-for="password" class="control-label">
+					Пароль
+				</label>
+				<input asp-for="password" class="form-control" />
+				<span asp-validation-for="password" class="colorError" class="text-danger"></span>
+			</div>
+			<div>
+				<input type="submit" value="Войти" id="signInBtnSumbmit"/>
+			</div>
+		</form>
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+</body>
+</html>

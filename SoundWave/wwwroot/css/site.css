@@ -12,14 +12,22 @@
     width: 100%;
     display: flex;
 }
+
+#bodyFromLayout {
+    background: rgb(60,6,92);
+    background: linear-gradient(180deg, rgba(60,6,92,1) 0%, rgba(23,21,23,1) 13%, rgba(3,3,3,1) 100%);
+}
 /*/////////     HEADER     /////////*/
 header {
     width: 100%;
     height: 80px;
     position: sticky;
-    background: #030303;
+    /*  background: #030303;*/
     display: flex;
     justify-content: space-between;
+}
+
+.headerWithBorder {
     border-bottom: 0.5px solid gray;
 }
 
@@ -98,7 +106,7 @@ header section:nth-child(2){
 
 #signInA:hover{
     color: white;
-    background: #030303;
+    background: transparent;
     transition: 0.3s;
 }
 
@@ -210,13 +218,12 @@ header section:nth-child(2){
 
 /*///////////////     SideBar  ////////////////////*/
 #sideBar {
-    height: 82.4vh;
-    border-right: 0.5px solid gray;
     position: sticky;
+    height: 82.4vh;
 }
 
 #sideBar ul {
-    padding: 0px 0px 0px 8px;
+    padding: 0px 0px 0px 14px;
 }
 
 
@@ -229,6 +236,7 @@ header section:nth-child(2){
 }
 
 .hiddenSideBar {
+    margin: 0;
     width: 90px;
 }
 
@@ -239,8 +247,8 @@ header section:nth-child(2){
 
 
 .hiddenSideBar ul li a div{
-    height: 75px;
-    width: 70px;
+    height: 70px;
+    width: 60px;
     padding: 2px;
     text-align: center;
     border-radius: 12px;
@@ -249,13 +257,13 @@ header section:nth-child(2){
 
 .hiddenSideBar ul li a div img {
     margin: 10px 0px 0px 0px;
-    width: 25px;
-    height: 28px;
+    width: 20px;
+    height: 25px;
 }
 
 .hiddenSideBar ul li a div h2{
     color: white;
-    font-size: 11px;
+    font-size: 10px;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     padding: 6px 0px 0px 0px;
@@ -272,31 +280,33 @@ header section:nth-child(2){
 
 .visibleSideBar {
     width: 240px;
+    border-right: 0.5px solid gray;
 }
 
 .visibleSideBar ul li{
     list-style: none;
 }
 
+
 .visibleSideBar ul li a div {
-    height: 55px;    
+    height: 40px;    
     width: 205px;
-    border-radius: 12px;
+    border-radius: 5px;
     display: flex;
-    margin: 12px 0px 0px 10px;
+    margin: 0px 0px 0px 5px;
 }
 
 
 .visibleSideBar ul li a div img {
-    margin: 12px 0px 0px 20px;
-    width: 25px;
-    height: 28px;
+    margin: 8px 0px 0px 30px;
+    width: 20px;
+    height: 23px;
 }
 
 .visibleSideBar ul li a div h2{
     color: white;
-    margin: 12px 12px 12px 20px;
-    font-size: 16px;
+    margin: 6px 12px 12px 14px;
+    font-size: 14px;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     padding: 6px 0px 0px 0px;
@@ -631,6 +641,18 @@ body {
 
 #mainBODY {
     margin: 20px 0px 0px 15px;
+}
+
+.styleNext {
+    width: 80px;
+    border-bottom: 0.5px solid white;
+}
+
+.styleNext h2 {
+    font-size: 16px;
+    color: white;
+    width: 80px;
+    text-align:center;
 }
 
 .activeA {
