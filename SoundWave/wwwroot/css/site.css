@@ -17,6 +17,12 @@
     background: rgb(60,6,92);
     background: linear-gradient(180deg, rgba(60,6,92,1) 0%, rgba(23,21,23,1) 13%, rgba(3,3,3,1) 100%);
 }
+
+#bodyFromLayoutWaveStudio {
+    height: 100vh;
+    background: rgb(60,6,92);
+    background: linear-gradient(180deg, rgba(60,6,92,1) 0%, rgba(23,21,23,1) 13%, rgba(3,3,3,1) 100%);
+}
 /*/////////     HEADER     /////////*/
 header {
     width: 100%;
@@ -1049,9 +1055,8 @@ body {
                    WaveStudioStyle
 ========================================================*/
 /*///////////////     SideBar  ////////////////////*/
-/*#sideBarWaveStudio {
+#sideBarWaveStudio {
     height: 90vh;
-    border-right: 0.5px solid gray;
 }
 
 #sideBarWaveStudio ul {
@@ -1114,67 +1119,19 @@ body {
 }
 
 
-.visibleSideBar {
-    width: 240px;
-}
-
-.visibleSideBar ul li{
-    list-style: none;
-}
-
-
-.visibleSideBar ul li a div {
-    height: 55px;    
-    width: 210px;
-    border-radius: 12px;
-    display: flex;
-}
-
-
-.visibleSideBar ul li a div img {
-    margin: 12px 0px 0px 20px;
-    width: 25px;
-    height: 28px;
-}
-
-.visibleSideBar ul li a div h2{
-    color: white;
-    margin: 12px 12px 12px 30px;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    padding: 6px 0px 0px 0px;
-    
-}
-
-.visibleSideBar ul li a div:hover{
-    background: #757575cf;
-}
-
-.visibleSideBar ul li a div:active {
-    border: 1px solid gray;
-}
-
-
 .hiddenHrSideBar{
     visibility: hidden;
-}
-
-.visibleHrSideBar {
-    color: gray;
-    border-bottom: 0.5px solid gray;
-    width: 200px;
-    margin: auto;
 }
 
 
 
 .chooseView {
     background: #2f2f2f;
-}*/
+}
+
 /*////////////////  WaveStudio GanresStyle   ///////////////*/
 
-/*#mainWaveStudioGanres {
+#mainWaveStudioGanres {
     display: flex;
     
 }
@@ -1224,12 +1181,12 @@ body {
 #fieldGanresAdd div form div label{
     font-size: 18px;
     color: white;
-}*/
+}
 
 /*//// Edit ////*/
 
 
-/*#fieldGanresEdit {
+#fieldGanresEdit {
     height: 90vh;
     flex-basis: 60%;
 }
@@ -1314,13 +1271,13 @@ body {
 #fieldGanresEdit div form div label{
     font-size: 18px;
     color: white;
-}*/
+}
 
 
 /*////////   Remove  ////////*/
 
 
-/*#fieldGanresRemove{
+#fieldGanresRemove{
     flex-basis: 60%;
 }
 
@@ -1426,11 +1383,11 @@ body {
 
 .chooseGanre{
     background: #2f2f2f;
-}*/
+}
 
 /*///////////////  WaveStudio UsersStatusStyle   ///////////////////*/
 
-/*#fieldUserStatus{
+#fieldUserStatus{
     flex-basis: 30%;
     height: 90vh;
 
@@ -1577,19 +1534,19 @@ body {
     font-size: 18px;    
     padding: 8px 0px 2px 20px;
     
-}*/
+}
 
 
 /*////////////////  WaveStudio SongsStyle   ///////////////*/
 
-/*#mainWaveStudioSongs {
-    display: flex;
-}*/
 
+#mainWaveStudioSongs {
+    display: flex;
+}
 
 /*/////   Add  //////*/
 
-/*#fieldSongAdd{
+#fieldSongAdd{
     flex-basis: 52%;
     height: 90vh;
 
@@ -1702,13 +1659,13 @@ body {
     color: white;
     font-size: 20px;
     padding: 10px 0px 0px 20px;
-}*/
+}
 
 
 /*/////   Edit  //////*/
 
 
-/*#fieldSongEdit {
+#fieldSongEdit {
     flex-basis: 52%;
     height: 90vh;
 }
@@ -1867,10 +1824,10 @@ body {
 
 #errorGanreEdit{
     padding: 0px 0px 0px 30px;
-}*/
+}
 
 /*///////  Remove  ////////*/
-/*#songDelete h2, h3 {
+#songDelete h2, h3 {
     color: white;
 }
 
@@ -1933,5 +1890,5 @@ body {
 
 #errorPreview{
     padding: 0px 0px 0px 48px;
-}*/
+}
 

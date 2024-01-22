@@ -1,8 +1,8 @@
-﻿@model SoundWave.Models.LoginModel
+﻿@model SoundWave.Models.RegisterModel
 
 @{
-	ViewBag.Title = "SignIn";
-	Layout = null;
+	ViewBag.Title = "Register";
+	Layout = null;//"~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -18,42 +18,53 @@
 </head>
 <body id="bodySignIn">
 
-	<div id="formSignIn">
+	<div id="formRegister">
 		<section id="btnSignInUp">
 			<div>
-				<span>
-					<a asp-area="" asp-controller="Account" asp-action="SignIn">Вход</a>
-				</span>
+				<a asp-area="" asp-controller="Account" asp-action="SignIn">Вход</a>
 			</div>
 			<div>
-				<a asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+				<span>
+					<a asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+				</span>
 			</div>
 		</section>
-		<form asp-action="SignIn">
-			<div asp-validation-summary="ModelOnly" style="color: black;" ></div>
+		<form asp-action="Register" asp-controller="Account">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div>
+				<label asp-for="FullName" class="control-label">ФИО</label>
+				<input asp-for="FullName" class="form-control" />
+				<span asp-validation-for="FullName" class="colorError" class="text-danger"></span>
+			</div>
 			<div>
 				<label asp-for="login" class="control-label">Логин</label>
 				<input asp-for="login" class="form-control" />
 				<span asp-validation-for="login" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
-				<label asp-for="password" class="control-label">
-					Пароль
-				</label>
+				<label asp-for="password" class="control-label">Пароль</label>
 				<input asp-for="password" class="form-control" />
 				<span asp-validation-for="password" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
-				<input type="submit" value="Войти" id="signInBtnSumbmit"/>
+				<label asp-for="confirmPassword" class="control-label">
+					Подтверждение пароля
+				</label>
+				<input asp-for="confirmPassword" class="form-control" />
+				<span asp-validation-for="confirmPassword" class="colorError" class="text-danger"></span>
+			</div>
+			<div>
+				<input type="submit" value="Зарегистрироваться" id="signInBtnSumbmit" />
 			</div>
 		</form>
 	</div>
+
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
-
+		@{
+			await Html.RenderPartialAsync("_ValidationScriptsPartial");
+		}
 </body>
 </html>
+

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SoundWave.BLL.DTO;
 using SoundWave.BLL.Interfaces;
 using SoundWave.DAL.Entities;
 using SoundWave.DAL.Interfaces;
@@ -100,14 +101,14 @@ namespace SoundWave.Controllers
 
         public async Task<ActionResult> LogOut()
         {
-            //Response.Cookies.Delete("userLoginSoundWave");
-            //Response.Cookies.Delete("userFullNameSoundWave");
-            //Response.Cookies.Delete("userIsAdminSoundWave");
-            //HomeModel model = new HomeModel();
-            //model.Songs = await repository.GetListSongs();
-            //model.currentSong = model.Songs.First();
-            //model.previousSong = model.Songs.Last().Id;
-            //model.nextSong = model.Songs.Skip(1).Take(1).FirstOrDefault().Id;
+            Response.Cookies.Delete("userLoginSoundWave");
+            Response.Cookies.Delete("userFullNameSoundWave");
+            Response.Cookies.Delete("userIsAdminSoundWave");
+            HomeModel model = new HomeModel();
+            model.Songs = await songService.ToList();
+            model.currentSong = model.Songs.First();
+            model.previousSong = model.Songs.Last().Id;
+            model.nextSong = model.Songs.Skip(1).Take(1).FirstOrDefault().Id;
             //model.playlists = await repository.GetListPlaylists();
             return RedirectToAction("Index", "Home");
         }
@@ -118,37 +119,36 @@ namespace SoundWave.Controllers
             return View("Register");
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Register([Bind("FullName", "login", "password", "confirmPassword")] RegisterModel user)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            User newUser = new User() { FullName = user.FullName, login = user.login, password = user.password };
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("FullName", "login", "password", "confirmPassword")] RegisterModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserDTO newUser = new UserDTO() { FullName = user.FullName, login = user.login, password = user.password };
 
-        //            byte[] salt;
-        //            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-        //            var pbkdf2 = new Rfc2898DeriveBytes(user.password, salt, 100000);
-        //            byte[] hash = pbkdf2.GetBytes(20);
-        //            byte[] hashBytes = new byte[36];
-        //            Array.Copy(salt, 0, hashBytes, 0, 16);
-        //            Array.Copy(hash, 0, hashBytes, 16, 20);
-        //            string savedPasswordHash = Convert.ToBase64String(hashBytes);
-        //            newUser.password = savedPasswordHash;
-        //            newUser.salt = Encoding.UTF8.GetString(salt);
-        //            await repository.addUser(newUser);
-        //            await repository.save();
-        //            return View("SignIn");
-        //        }
-        //        catch (Exception)
-        //        {
-        //            return View("Eror");
-        //        }
-        //    }
-        //    return View();
-        //}
+                    byte[] salt;
+                    new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+                    var pbkdf2 = new Rfc2898DeriveBytes(user.password, salt, 100000);
+                    byte[] hash = pbkdf2.GetBytes(20);
+                    byte[] hashBytes = new byte[36];
+                    Array.Copy(salt, 0, hashBytes, 0, 16);
+                    Array.Copy(hash, 0, hashBytes, 16, 20);
+                    string savedPasswordHash = Convert.ToBase64String(hashBytes);
+                    newUser.password = savedPasswordHash;
+                    newUser.salt = Encoding.UTF8.GetString(salt);
+                    await userService.Create(newUser);
+                    return View("SignIn");
+                }
+                catch (Exception)
+                {
+                    return View("Eror");
+                }
+            }
+            return View();
+        }
 
 
         //public async Task<IActionResult> UsersStatus()

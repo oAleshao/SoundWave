@@ -62,6 +62,8 @@ namespace SoundWave.BLL.Services
 		public async Task<UserDTO> GetByName(string name)
 		{
 			var user = await Database.users.GetByName(name);
+			if (user == null)
+				return null;
 			return new UserDTO
 			{
 				Id = user.Id,

@@ -407,24 +407,26 @@ function changeFillRanger() {
 
 // AccountData
 
-//const myMenu = document.querySelector(".profileContextMenu");
+const mymenu = document.querySelector(".profileContextMenu");
+const btnmymenu = document.getElementById("profileMenubtn");
 
-//profileMenubtn.addEventListener("click", (event) => {
-//    event.stopPropagation();
-//    event.preventDefault();
-//    myMenu.style.top = profileMenubtn.offsetTop + 35 + "px";
-//    myMenu.style.left = profileMenubtn.offsetLeft - 275 + "px";
-//    myMenu.classList.add("active");
-//});
+if (btnmymenu !== null) {
+    btnmymenu.addEventListener("click", (event) => {
+        event.stopPropagation()
+        event.preventDefault
+        mymenu.style.top = profileMenubtn.offsetTop + 35 + "px";
+        mymenu.style.left = profileMenubtn.offsetLeft - 275 + "px";
+        mymenu.classList.add("active");
+    });
 
-//myMenu.addEventListener("click", (event) => {
-//    event.stopPropagation();
-//});
+    mymenu.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
 
-//bodyFromLayout.addEventListener("click", () => {
-//    myMenu.classList.remove("active");
-//});
-
+    bodyFromLayout.addEventListener("click", () => {
+        mymenu.classList.remove("active");
+    });
+}
 
 
 

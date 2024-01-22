@@ -1,0 +1,318 @@
+﻿@model SoundWave.Models.SongModel
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = null;
+	Context.Request.Cookies.TryGetValue("userFullNameSoundWave", out string? FullName);
+	Context.Request.Cookies.TryGetValue("userLoginSoundWave", out string? value);
+	Context.Request.Cookies.TryGetValue("userIsAdminSoundWave", out string? isAdmin);
+	string shortTittle = string.Empty;
+	string shortExecutor = string.Empty;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Sound Wave</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/MusicalPortal.styles.css" asp-append-version="true" />
+	<link rel="icon" href="~/img//SoundWaveLogo1.svg" />
+</head>
+<body id="bodyFromLayoutWaveStudio">
+
+
+	<header>
+		<section>
+			<div class="btnSideBarStyle">
+				<div id="btnSideBar">
+					<img src="~/img/menu (2).png" />
+				</div>
+			</div>
+			<div id="IconTitle">
+				<img src="~/img/SoundWaveLogo1.svg" />
+				<h2>WaveStudio</h2>
+			</div>
+		</section>
+
+
+		<section>
+			<div id="profileMenu">
+				<img id="profileMenubtn" src="/img/ProfileData.png" />
+			</div>
+
+			<div class="profileContextMenu">
+				<h3>@FullName</h3>
+				<h3>@value</h3>
+				<div id="myHr"></div>
+				<div>
+					<ul>
+						<li>
+							<a asp-action="Index" asp-controller="WaveStudio">
+								<img src="~/img/SoundWaveLogo1.svg" />
+								<h2>WaveStudio</h2>
+							</a>
+						</li>
+						<li>
+							<a>
+								<img src="~/img/account.png" />
+								<h2>Аккаунт</h2>
+							</a>
+						</li>
+						<li>
+							<a asp-action="LogOut" asp-controller="Account">
+								<img src="~/img/logout.png" />
+								<h2>Выйти</h2>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div id="myHr"></div>
+				<div id="aboutSoundWave">
+					<p>SoundWave - платформа для прослушивания музыки</p>
+				</div>
+			</div>
+
+		</section>
+	</header>
+
+
+
+	<main role="main" id="mainWaveStudioSongs">
+		<section id="sideBarWaveStudio" class="hiddenSideBar">
+			<ul>
+				<li>
+					<a asp-action="Index" asp-controller="Home">
+						<div>
+							<img src="~/img/home.png" />
+							<h2>Главная</h2>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a asp-controller="Songs" asp-action="Index">
+						<div class="chooseView">
+							<img src="~/img/music-note.png" />
+							<h2>Добавить трек</h2>
+						</div>
+					</a>
+				</li>
+				@if (isAdmin == "True")
+				{
+					<li>
+						<a asp-action="Index" asp-controller="Ganres">
+							<div>
+								<img src="~/img/genre.png" />
+								<h2>Добаить жанр</h2>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a asp-action="UsersStatus" asp-controller="Account">
+							<div>
+								<img src="~/img/multiple-users-silhouette.png" />
+								<h2>Пользователи</h2>
+							</div>
+						</a>
+					</li>
+				}
+			</ul>
+			<div id="hrSideBar" class="hiddenHrSideBar"></div>
+		</section>
+		<section id="ListSongs">
+			<p id="yourSongsAdd">Ваши треки:</p>
+			@foreach (var song in Model.songs)
+			{
+				if (song.OwnerId == Model.IdActiveUser)
+				{
+					if (song.Title.Length > 30 || song.Executor.Length > 30)
+					{
+						shortTittle = song.Title.Substring(0, 30);
+						shortTittle += "...";
+						shortExecutor = song.Executor.Substring(0, 30);
+						shortExecutor += "...";
+					}
+					else
+					{
+						shortTittle = song.Title;
+						shortExecutor = song.Executor;
+					}
+
+					<a asp-action="Edit" asp-controller="Songs" asp-route-id="@song.Id" class="songV">
+						<img src="@song.preview" />
+						<div>
+							<div><h2>@shortTittle</h2></div>
+							<div><p>@shortExecutor</p></div>
+						</div>
+						<h2 class="DurationList">@song.duration</h2>
+					</a>
+				}
+			}
+		</section>
+
+		<section id="fieldSongAdd">
+			<div>
+				<div>
+					<form asp-action="Create" asp-controller="Songs" enctype="multipart/form-data">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<input type="hidden" name="MAX_FILE_SIZE" value="10000000000">
+						<section>
+							<div class="form-group">
+								<span asp-validation-for="Title" class="text-danger"></span>
+								<label asp-for="Title" class="control-label">Название</label>
+								<input asp-for="Title" class="form-control" />
+							</div>
+							<div class="form-group">
+								<span asp-validation-for="Executor" class="text-danger"></span>
+								<label asp-for="Executor" class="control-label">Исполнитель</label>
+								<input asp-for="Executor" class="form-control" />
+							</div>
+							<div class="form-group">
+								<span asp-validation-for="Href" class="text-danger"></span>
+								<label asp-for="Href" class="control-label">MP3 файл</label>
+								<input type="file" name="uploadedHref" value="@Model.Href" asp-for="Href" accept=".mp3" class="form-control" />
+							</div>
+							<div class="form-group">
+								<span asp-validation-for="videoHref" class="text-danger"></span>
+								<label asp-for="videoHref" class="control-label">MP4 файл</label>
+								<input type="file" name="uploadedVHref" asp-for="videoHref" value="@Model.videoHref" class="form-control" accept=".mp4" />
+							</div>
+							<div class="form-group">
+								<input type="hidden" asp-for="preview" id="previewInput" class="form-control" />
+							</div>
+							<span id="errorGanre" asp-validation-for="songGanres" class="text-danger"></span>
+							<div class="form-group">
+								@foreach (var item in Model.ganres)
+								{
+									<input type="checkbox" id="@item.Id" value="@item.Id" name="selectedGanres">
+									<label>@item.Title</label>
+								}
+							</div>
+
+						</section>
+						<section>
+							<img id="previewImgSongAdd" src="/img/previewPhoto.svg" />
+							<input asp-for="preview" name="uploadedPrview" type="file" value="@Model.preview" id="AddPosterbtn" accept=".jpg, .jpeg, .png, .webp, .bmp, .svg" />
+							<span id="errorPreview" asp-validation-for="preview" class="text-danger"></span>
+
+							<script>
+								AddPosterbtn.addEventListener("change", (event) => {
+									var target = event.target;
+
+									if (!FileReader) {
+										previewImgSongAdd.src = "/img/previewPhoto.svg";
+										previewImgSongAdd.alt = "Вы ничего не выбрали"
+										return;
+									}
+
+									if (!target.files.length) {
+										previewImgSongAdd.src = "/img/previewPhoto.svg";
+										previewImgSongAdd.alt = "Вы ничего не выбрали"
+										return;
+									}
+
+									var fileReader = new FileReader();
+
+									fileReader.onload = () => {
+										const nameList = AddPosterbtn.value.split(/\\/)
+										previewInput.value = nameList[nameList.length - 1];
+										previewInput.focus();
+										previewImgSongAdd.src = fileReader.result;
+									}
+
+									fileReader.readAsDataURL(target.files[0]);
+								});
+							</script>
+
+							<div class="form-group">
+								<input type="submit" value="Добавить песню" />
+							</div>
+						</section>
+					</form>
+				</div>
+			</div>
+
+		</section>
+	</main>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/WaveStudio.js" asp-append-version="true"></script>
+
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+</body>
+</html>
+
+
+@* @using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<h1>@this.Context.Request.Cookies["userLoginSoundWave"]</h1>
+
+	<p>
+		<a asp-action="Create">Create New</a>
+	</p>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Title)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Executor)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Href)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.videoHref)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Like)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Dislike)
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Executor)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Href)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.videoHref)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Like)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Dislike)
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+						<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+						<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+ *@
