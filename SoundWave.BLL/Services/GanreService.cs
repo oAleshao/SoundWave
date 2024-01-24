@@ -54,7 +54,7 @@ namespace SoundWave.BLL.Services
 		{
 			var ganre = await Database.ganres.GetByName(name);
 			if (ganre == null)
-				throw new ValidationException("Wrong team!");
+				throw new ValidationException("Wrong ganre!");
 			return new GanreDTO
 			{
 				Id = ganre.Id,

@@ -16,25 +16,28 @@ namespace SoundWave.BLL.Services
 	{
 		IUnitOfWorks Database { get; set; }
 
-		public SongService(IUnitOfWorks unit)
+
+        public SongService(IUnitOfWorks unit)
 		{
 			Database = unit;
 		}
 
 		public async Task Create(SongDTO song)
 		{
-			var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GanreDTO, Ganre>()).CreateMapper();
 			var newSong = new Song()
 			{
 				Title = song.Title,
 				Executor = song.Executor,
-				ganres = mapper.Map<IEnumerable<GanreDTO>, IEnumerable<Ganre>>(song.ganres).ToList(),
 				Owner = await Database.users.GetById(song.OwnerId),
 				Href = song.Href,
 				videoHref = song.videoHref,
 				preview = song.preview,
 				duration = song.duration,
 			};
+			foreach(var g in song.ganres)
+			{
+				newSong.ganres.Add(await Database.ganres.GetById(g.Id));
+			}
 			await Database.songs.Create(newSong);
 			await Database.Save();
 		}
@@ -58,12 +61,21 @@ namespace SoundWave.BLL.Services
 			var song = await Database.songs.GetById(id);
 			if (song == null)
 				throw new ValidationException("Wrong song!");
+			var mapperForGanre = new MapperConfiguration(cfg => cfg.CreateMap<Ganre, GanreDTO>()).CreateMapper();
 			return new SongDTO
 			{
 				Id = song.Id,
 				Title = song.Title,
 				Executor = song.Executor,
-				OwnerId = song.Owner.Id
+				OwnerId = song.Owner.Id,
+				Href = song.Href,
+				videoHref = song.videoHref,
+				preview = song.preview,
+				duration = song.duration,
+				amountViews = song.amountViews,
+				Dislike = song.Dislike,
+				Like = song.Like,
+				ganres = mapperForGanre.Map<IEnumerable<Ganre>, IEnumerable<GanreDTO>>(song.ganres).ToList()
 			};
 		}
 
@@ -72,19 +84,29 @@ namespace SoundWave.BLL.Services
 			var song = await Database.songs.GetByName(name);
 			if (song == null)
 				throw new ValidationException("Wrong song!");
+			var mapperForGanre = new MapperConfiguration(cfg => cfg.CreateMap<Ganre, GanreDTO>()).CreateMapper();
 			return new SongDTO
 			{
 				Id = song.Id,
 				Title = song.Title,
 				Executor = song.Executor,
-				OwnerId = song.Owner.Id
+				OwnerId = song.Owner.Id,
+				Href = song.Href,
+				videoHref = song.videoHref,
+				preview = song.preview,
+				duration = song.duration,
+				amountViews = song.amountViews,
+				Dislike = song.Dislike,
+				Like = song.Like,
+				ganres = mapperForGanre.Map<IEnumerable<Ganre>, IEnumerable<GanreDTO>>(song.ganres).ToList()
 			};
 		}
 
 		public async Task<IEnumerable<SongDTO>> ToList()
 		{
+            var mapperForGanre = new MapperConfiguration(cfg => cfg.CreateMap<Ganre, GanreDTO>()).CreateMapper();
 			var config = new MapperConfiguration(cfg => cfg.CreateMap<Song, SongDTO>()
-		   .ForMember("OwnerId", opt => opt.MapFrom(c => c.Owner.Id)).ForMember("ganres", opt => opt.MapFrom(c => c.ganres))); ;
+			.ForMember("OwnerId", opt => opt.MapFrom(c => c.Owner.Id)).ForMember("ganres", opt => opt.MapFrom(c => mapperForGanre.Map<IEnumerable<Ganre>, IEnumerable<GanreDTO>>(c.ganres))));
 			var mapper = new Mapper(config);
 			return mapper.Map<IEnumerable<Song>, IEnumerable<SongDTO>>(await Database.songs.ToList());
 		}

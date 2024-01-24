@@ -151,33 +151,32 @@ namespace SoundWave.Controllers
         }
 
 
-        //public async Task<IActionResult> UsersStatus()
-        //{
-        //    var model = new UsersStatusModel();
-        //    model.users = await repository.GetListUser();
-        //    return View(model);
-        //}
+        public async Task<IActionResult> UsersStatus()
+        {
+            var model = new UsersStatusModel();
+            model.users = userService.ToList().Result.ToList();
+            return View(model);
+        }
 
-        //public async Task<IActionResult> ChooseUser(int id)
-        //{
-        //    var model = new UsersStatusModel();
-        //    model.users = await repository.GetListUser();
-        //    model.User = await repository.GetUserById(id);
-        //    model.Id = id;
-        //    return View("~/Views/Account/UsersStatus.cshtml", model);
-        //}
+        public async Task<IActionResult> ChooseUser(int id)
+        {
+            var model = new UsersStatusModel();
+            model.users = userService.ToList().Result.ToList();
+            model.User = await userService.GetById(id);
+            model.Id = id;
+            return View("~/Views/Account/UsersStatus.cshtml", model);
+        }
 
-        //public async Task<IActionResult> AuthorizeUser(int id)
-        //{
-        //    var model = new UsersStatusModel();
-        //    model.users = await repository.GetListUser();
-        //    model.User = await repository.GetUserById(id);
-        //    model.User.Status = true;
-        //    repository.updateUser(model.User);
-        //    await repository.save();
-        //    model.Id = id;
-        //    return View("~/Views/Account/UsersStatus.cshtml", model);
-        //}
+        public async Task<IActionResult> AuthorizeUser(int id)
+        {
+            var model = new UsersStatusModel();
+            model.users = userService.ToList().Result.ToList();
+            model.User = await userService.GetById(id);
+            model.User.Status = true;
+            await userService.Update(model.User);
+            model.Id = id;
+            return View("~/Views/Account/UsersStatus.cshtml", model);
+        }
 
     }
 }

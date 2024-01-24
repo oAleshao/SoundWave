@@ -56,6 +56,7 @@ namespace SoundWave.BLL.Services
 				login = user.login,
 				password = user.password,
 				isAdmin = user.isAdmin,
+				Status = user.Status
 			};
 		}
 
@@ -84,25 +85,9 @@ namespace SoundWave.BLL.Services
 
 		public async Task Update(UserDTO user)
 		{
-			var upUser = new User()
-			{
-				Id = user.Id,
-				FullName = user.FullName,
-				login = user.login,
-				password = user.password,
-				isAdmin = user.isAdmin,
-			};
+			var upUser = await Database.users.GetById(user.Id);
 
-			byte[] salt;
-			new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-			var pbkdf2 = new Rfc2898DeriveBytes(upUser.password, salt, 100000);
-			byte[] hash = pbkdf2.GetBytes(20);
-			byte[] hashBytes = new byte[36];
-			Array.Copy(salt, 0, hashBytes, 0, 16);
-			Array.Copy(hash, 0, hashBytes, 16, 20);
-			string savedPasswordHash = Convert.ToBase64String(hashBytes);
-			upUser.password = savedPasswordHash;
-			upUser.salt = Encoding.UTF8.GetString(salt);
+			upUser.Status = user.Status;
 
 			Database.users.Update(upUser);
 			await Database.Save();

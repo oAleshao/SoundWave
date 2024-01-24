@@ -1,0 +1,228 @@
+﻿ @model SoundWave.Models.UsersStatusModel
+
+@{
+	ViewBag.Title = "UsersStatus";
+	Layout = null;
+	Layout = null;
+	Context.Request.Cookies.TryGetValue("userFullNameSoundWave", out string? FullName);
+	Context.Request.Cookies.TryGetValue("userLoginSoundWave", out string? value);
+	Context.Request.Cookies.TryGetValue("userIsAdminSoundWave", out string? isAdmin);
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Sound Wave</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/MusicalPortal.styles.css" asp-append-version="true" />
+	<link rel="icon" href="~/img//SoundWaveLogo1.svg" />
+</head>
+<body id="bodyFromLayoutWaveStudio">
+
+
+	<header>
+		<section>
+			<div class="btnSideBarStyle">
+				<div id="btnSideBar">
+					<img src="~/img/menu (2).png" />
+				</div>
+			</div>
+			<div id="IconTitle">
+				<img src="~/img/SoundWaveLogo1.svg" />
+				<h2>WaveStudio</h2>
+			</div>
+		</section>
+
+
+		<section>
+			<div id="profileMenu">
+				<img id="profileMenubtn" src="/img/ProfileData.png" />
+			</div>
+
+			<div class="profileContextMenu">
+				<h3>@FullName</h3>
+				<h3>@value</h3>
+				<div id="myHr"></div>
+				<div>
+					<ul>
+						<li>
+							<a asp-action="Index" asp-controller="WaveStudio">
+								<img src="~/img/SoundWaveLogo1.svg" />
+								<h2>WaveStudio</h2>
+							</a>
+						</li>
+						<li>
+							<a>
+								<img src="~/img/account.png" />
+								<h2>Аккаунт</h2>
+							</a>
+						</li>
+						<li>
+							<a asp-action="LogOut" asp-controller="Account">
+								<img src="~/img/logout.png" />
+								<h2>Выйти</h2>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div id="myHr"></div>
+				<div id="aboutSoundWave">
+					<p>SoundWave - платформа для прослушивания музыки</p>
+				</div>
+			</div>
+
+		</section>
+	</header>
+
+
+
+	<main role="main" id="mainWaveStudioGanres">
+		<section id="sideBarWaveStudio" class="hiddenSideBar">
+			<ul>
+				<li>
+					<a asp-action="Index" asp-controller="Home">
+						<div>
+							<img src="~/img/home.png" />
+							<h2>Главная</h2>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a asp-controller="Songs" asp-action="Index">
+						<div>
+							<img src="~/img/music-note.png" />
+							<h2>Добавить трек</h2>
+						</div>
+					</a>
+				</li>
+				@if (isAdmin == "True")
+				{
+					<li>
+						<a asp-action="Index" asp-controller="Ganres">
+							<div>
+								<img src="~/img/genre.png" />
+								<h2>Добаить жанр</h2>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a asp-action="UsersStatus" asp-controller="Account">
+							<div class="chooseView">
+								<img src="~/img/multiple-users-silhouette.png" />
+								<h2>Пользователи</h2>
+							</div>
+						</a>
+					</li>
+				}
+			</ul>
+			<div id="hrSideBar" class="hiddenHrSideBar"></div>
+		</section>
+		@if (Model.Id != 0)
+		{
+			<section id="fieldUserStatus">
+				<div>
+					<label>ФИО</label>
+					<input type="text" readonly value="@Model.User.FullName" />
+				</div>
+				<div>
+					<label>Логин</label>
+					<input type="text" readonly value="@Model.User.login" />
+				</div>
+				<div>
+					@if (Model.User.Status)
+					{
+						<p>Пользователь уже авторизован</p>
+					}
+					else
+					{
+						<a asp-action="AuthorizeUser" asp-controller="Account" asp-route-id="@Model.Id">
+							авторизовать
+						</a>
+					}
+				</div>
+			</section>
+		}
+		<section id="unauthorizedUsers">
+			<h2>Неавторизованные пользователи</h2>
+			<ul>
+				@foreach (var item in Model.users)
+				{
+					if (!item.Status)
+					{
+						@if (item.Id == Model.Id)
+						{
+							<li>
+								<a asp-action="ChooseUser" asp-route-id="@item.Id">
+									<div class="chooseGanre">
+										<h2>• @item.login</h2>
+									</div>
+								</a>
+							</li>
+						}
+						else
+						{
+							<li>
+								<a asp-action="ChooseUser" asp-route-id="@item.Id">
+									<div>
+										<h2>• @item.login</h2>
+									</div>
+								</a>
+							</li>
+						}
+
+
+					}
+				}
+			</ul>
+		</section>
+		<section id="authorizedUsers">
+			<h2>Авторизованные пользователи</h2>
+			<ul>
+				@foreach (var item in Model.users)
+				{
+					if (item.Status)
+					{
+						@* && item.login != value *@
+
+						@if (item.Id == Model.Id)
+						{
+							<li>
+								<a asp-action="ChooseUser" asp-route-id="@item.Id">
+									<div class="chooseGanre">
+										<h2>• @item.login</h2>
+									</div>
+								</a>
+							</li>
+						}
+						else
+						{
+							<li>
+								<a asp-action="ChooseUser" asp-route-id="@item.Id">
+									<div>
+										<h2>• @item.login</h2>
+									</div>
+								</a>
+							</li>
+						}
+
+					}
+				}
+			</ul>
+		</section>
+
+	</main>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/WaveStudio.js" asp-append-version="true"></script>
+
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+</body>
+</html>

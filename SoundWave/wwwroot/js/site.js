@@ -282,19 +282,6 @@ function setDurationTime() {
 
 function LaunchProgressBar() {
 
-    //for (let i = 0; i < ranger.max; i++) {
-    //    const span = document.createElement("span")
-    //    minutes = Math.floor(i / 60);
-    //    seconds = Math.floor(i - minutes * 60);
-    //    if (seconds >= 10)
-    //        span.textContent = minutes + ":" + seconds;
-    //    else
-    //        span.textContent = minutes + ":0" + seconds;
-    //    span.classList.add("currentTime");
-    //    span.classList.add("show");
-    //    spansCurrentTime.appendChild(span);
-    //}
-
     currentTimeForToolTip = document.querySelector(".currentTime");
 
     idInterval = setInterval(() => {
@@ -374,13 +361,22 @@ ranger.onmouseout = () => {
 
 
 ranger.oninput = () => {
-    audioPlayer.volume = 0;
+    if (userChooseVideo)
+        videoPlayerJs.volume = 0;
+    else
+        audioPlayer.volume = 0;
     changeFillRanger();
 
 }
 ranger.onchange = () => {
-    audioPlayer.currentTime = ranger.value;
-    audioPlayer.volume = 1;
+    if (userChooseVideo) {
+        videoPlayerJs.currentTime = ranger.value;
+        videoPlayerJs.volume = volumeRange.value / 100;
+    }
+    else {
+        audioPlayer.currentTime = ranger.value;
+        audioPlayer.volume = volumeRange.value / 100;
+    }
     tmpwidth = Number(ranger.value);
     minutes = Math.floor(ranger.value / 60);
     seconds = Math.floor(ranger.value - minutes * 60);

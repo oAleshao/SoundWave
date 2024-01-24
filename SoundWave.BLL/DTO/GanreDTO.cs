@@ -10,6 +10,5 @@ namespace SoundWave.BLL.DTO
 	{
 		public int Id { get; set; }
 		public string? Title { get; set; }
-		public ICollection<SongDTO>? songs { get; set; }
 	}
 }

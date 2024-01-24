@@ -108,7 +108,7 @@ namespace SoundWave.Controllers
                 };
                 foreach (var item in selectedGanres)
                 {
-                    s.ganres.Add(await ganreService.GetByName(item));
+                    s.ganres.Add(await ganreService.GetById(int.Parse(item)));
                 }
                 TagLib.File mp3File = TagLib.File.Create(_appEnvironment.WebRootPath + pathHref);
                 s.duration = mp3File.Properties.Duration.ToString("mm\\:ss");
@@ -131,144 +131,142 @@ namespace SoundWave.Controllers
 
         }
 
-        //// GET: Songs/Edit/5
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return View("~/Views/Shared/Error.cshtml");
-        //    }
+        // GET: Songs/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == 0)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
 
-        //    var song = await repository.GetSongById(id);
-        //    if (song == null)
-        //    {
-        //        return View("~/Views/Shared/Error.cshtml");
-        //    }
-        //    var model = new SongModel();
-        //    model = await InitModel(model);
-        //    model.Id = id;
-        //    model.Title = song.Title;
-        //    model.Executor = song.Executor;
-        //    model.songGanres = song.ganres;
-        //    model.Href = song.Href;
-        //    model.videoHref = song.videoHref;
-        //    model.preview = song.preview;
+            var song = await songService.GetById(id);
+            if (song == null)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+            var model = new SongModel();
+            model = await InitModel(model);
+            model.Id = id;
+            model.Title = song.Title;
+            model.Executor = song.Executor;
+            model.songGanres = song.ganres;
+            model.Href = song.Href;
+            model.videoHref = song.videoHref;
+            model.preview = song.preview;
+            model.ganres = await ganreService.ToList();
+            return View(model);
+        }
 
-        //    return View(model);
-        //}
+        // POST: Songs/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [RequestSizeLimit(1000000000)]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Executor,Href,videoHref,Like,Dislike")] SongModel song, IFormFile? uploadedPrview, IFormFile? uploadedHref, IFormFile? uploadedVHref, string[] selectedGanres)
+        {
+            song = await InitModel(song);
+            var initModel = await songService.GetById(song.Id);
+            song.Id = id;
+            song.Title = initModel.Title;
+            song.Executor = initModel.Executor;
+            song.songGanres = initModel.ganres;
+            song.Href = initModel.Href;
+            song.videoHref = initModel.videoHref;
+            song.preview = initModel.preview;
 
-        //// POST: Songs/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[RequestSizeLimit(1000000000)]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Executor,Href,videoHref,Like,Dislike")] SongModel song, IFormFile? uploadedPrview, IFormFile? uploadedHref, IFormFile? uploadedVHref, string[] selectedGanres)
-        //{
-        //    song = await InitModel(song);
-        //    var initModel = await repository.GetSongById(song.Id);
-        //    song.Id = id;
-        //    song.Title = initModel.Title;
-        //    song.Executor = initModel.Executor;
-        //    song.songGanres = initModel.ganres;
-        //    song.Href = initModel.Href;
-        //    song.videoHref = initModel.videoHref;
-        //    song.preview = initModel.preview;
+            if (id != song.Id)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
 
-        //    if (id != song.Id)
-        //    {
-        //        return View("~/Views/Shared/Error.cshtml");
-        //    }
-
-        //    if (selectedGanres.Length == 0)
-        //    {
-        //        ModelState.AddModelError("songGanres", "Вы не указали жанр");
-        //        return View(song);
-        //    }
+            if (selectedGanres.Length == 0)
+            {
+                ModelState.AddModelError("songGanres", "Вы не указали жанр");
+                return View(song);
+            }
 
 
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        var changedSong = await repository.GetSongById(song.Id);
-        //        if (uploadedHref != null)
-        //        {
-        //            changedSong.Href = "/songs/" + uploadedHref.FileName;
-        //            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + changedSong.Href, FileMode.Create))
-        //            {
-        //                await uploadedHref.CopyToAsync(fileStream);
-        //            }
-        //        }
+            if (ModelState.IsValid)
+            {
+                var changedSong = await songService.GetById(song.Id);
+                if (uploadedHref != null)
+                {
+                    changedSong.Href = "/songs/" + uploadedHref.FileName;
+                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + changedSong.Href, FileMode.Create))
+                    {
+                        await uploadedHref.CopyToAsync(fileStream);
+                    }
+                }
 
-        //        if (uploadedPrview != null)
-        //        {
-        //            changedSong.preview = "/previews/" + uploadedPrview.FileName;
-        //            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + changedSong.preview, FileMode.Create))
-        //            {
-        //                await uploadedPrview.CopyToAsync(fileStream);
-        //            }
-        //        }
+                if (uploadedPrview != null)
+                {
+                    changedSong.preview = "/previews/" + uploadedPrview.FileName;
+                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + changedSong.preview, FileMode.Create))
+                    {
+                        await uploadedPrview.CopyToAsync(fileStream);
+                    }
+                }
 
-        //        if (uploadedVHref != null)
-        //        {
-        //            changedSong.videoHref = "/videos/" + uploadedVHref.FileName;
-        //            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + changedSong.videoHref, FileMode.Create))
-        //            {
-        //                await uploadedVHref.CopyToAsync(fileStream);
-        //            }
-        //        }
+                if (uploadedVHref != null)
+                {
+                    changedSong.videoHref = "/videos/" + uploadedVHref.FileName;
+                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + changedSong.videoHref, FileMode.Create))
+                    {
+                        await uploadedVHref.CopyToAsync(fileStream);
+                    }
+                }
+				foreach (var item in selectedGanres)
+				{
+					changedSong.ganres.Add(await ganreService.GetById(int.Parse(item)));
+				}
+                TagLib.File mp3File = TagLib.File.Create(_appEnvironment.WebRootPath + changedSong.Href);
+                changedSong.duration = mp3File.Properties.Duration.ToString("mm\\:ss");
+                songService.Update(changedSong);
+                return RedirectToAction(nameof(Index));
+            }
 
-        //        changedSong.ganres = await repository.GetListGanres(selectedGanres);
-        //        TagLib.File mp3File = TagLib.File.Create(_appEnvironment.WebRootPath + changedSong.Href);
-        //        changedSong.duration = mp3File.Properties.Duration.ToString("mm\\:ss");
-        //        repository.updateSong(changedSong);
-        //        await repository.save();
+            return View(song);
+        }
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
+        // GET: Songs/Delete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == 0)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
 
-        //    return View(song);
-        //}
+            var song = await songService.GetById(id);
+            if (song == null)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+            var model = new SongModel();
+            model = await InitModel(model);
+            model.Id = id;
+            model.Title = song.Title;
+            model.Executor = song.Executor;
+            model.songGanres = song.ganres;
+            model.Href = song.Href;
+            model.videoHref = song.videoHref;
+            model.preview = song.preview;
 
-        //// GET: Songs/Delete/5
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return View("~/Views/Shared/Error.cshtml");
-        //    }
+            return View(model);
+        }
 
-        //    var song = await repository.GetSongById(id);
-        //    if (song == null)
-        //    {
-        //        return View("~/Views/Shared/Error.cshtml");
-        //    }
-        //    var model = new SongModel();
-        //    model = await InitModel(model);
-        //    model.Id = id;
-        //    model.Title = song.Title;
-        //    model.Executor = song.Executor;
-        //    model.songGanres = song.ganres;
-        //    model.Href = song.Href;
-        //    model.videoHref = song.videoHref;
-        //    model.preview = song.preview;
-
-        //    return View(model);
-        //}
-
-        //// POST: Songs/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (id != 0)
-        //    {
-        //        await repository.deleteSong(id);
-        //    }
-
-        //    await repository.save();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        // POST: Songs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (id != 0)
+            {
+                await songService.Delete(id);
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
 
     }
