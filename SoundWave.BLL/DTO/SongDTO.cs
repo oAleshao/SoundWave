@@ -24,5 +24,17 @@ namespace SoundWave.BLL.DTO
 		{
 			ganres = new List<GanreDTO>();
 		}
+
+		public bool HasGenre(string genre)
+		{
+			foreach(var g in ganres)
+			{
+				if(g.Title.ToLower().Contains(genre.ToLower()))
+					return true;
+			}
+			return false;
+		}
+
+		
 	}
 }

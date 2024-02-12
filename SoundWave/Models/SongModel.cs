@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Identity.Client;
 using SoundWave.BLL.DTO;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,5 +20,16 @@ namespace SoundWave.Models
         public IEnumerable<GanreDTO>? songGanres { get; set; }
         public IEnumerable<GanreDTO>? ganres { get; set; }
         public IEnumerable<SongDTO>? songs { get; set; }
+        public FilterViewModel? FilterViewModel { get; set; }
+        public PageViewModel? PageViewModel { get; set; }
+        public SortViewModel? SortViewModel { get; set; }
+        
+        public SongModel()
+        {
+            FilterViewModel = new FilterViewModel();
+            PageViewModel = new PageViewModel();
+            SortViewModel = new SortViewModel();
+
+        }
     }
 }

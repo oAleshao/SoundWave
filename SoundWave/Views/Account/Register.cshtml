@@ -1,8 +1,9 @@
-﻿@model SoundWave.Models.RegisterModel
+﻿
+@model SoundWave.Models.RegisterModel
 
 @{
-	ViewBag.Title = "Register";
-	Layout = null;//"~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = SoundWave.Resources.Resource.Title;
+	Layout = null;
 }
 
 <!DOCTYPE html>
@@ -21,40 +22,40 @@
 	<div id="formRegister">
 		<section id="btnSignInUp">
 			<div>
-				<a asp-area="" asp-controller="Account" asp-action="SignIn">Вход</a>
+				<a asp-area="" asp-controller="Account" asp-action="SignIn">@SoundWave.Resources.Resource.EnterTitle</a>
 			</div>
 			<div>
 				<span>
-					<a asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+					<a asp-area="" asp-controller="Account" asp-action="Register">@SoundWave.Resources.Resource.RegistrationTitle</a>
 				</span>
 			</div>
 		</section>
 		<form asp-action="Register" asp-controller="Account">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div>
-				<label asp-for="FullName" class="control-label">ФИО</label>
+				<label asp-for="FullName" class="control-label">@SoundWave.Resources.Resource.FullName</label>
 				<input asp-for="FullName" class="form-control" />
 				<span asp-validation-for="FullName" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
-				<label asp-for="login" class="control-label">Логин</label>
+				<label asp-for="login" class="control-label">@SoundWave.Resources.Resource.Login</label>
 				<input asp-for="login" class="form-control" />
 				<span asp-validation-for="login" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
-				<label asp-for="password" class="control-label">Пароль</label>
+				<label asp-for="password" class="control-label">@SoundWave.Resources.Resource.Password</label>
 				<input asp-for="password" class="form-control" />
 				<span asp-validation-for="password" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
 				<label asp-for="confirmPassword" class="control-label">
-					Подтверждение пароля
+					@SoundWave.Resources.Resource.ConfirmPassword
 				</label>
 				<input asp-for="confirmPassword" class="form-control" />
 				<span asp-validation-for="confirmPassword" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
-				<input type="submit" value="Зарегистрироваться" id="signInBtnSumbmit" />
+				<input type="submit" value="@SoundWave.Resources.Resource.Registration" id="signInBtnSumbmit" />
 			</div>
 		</form>
 	</div>

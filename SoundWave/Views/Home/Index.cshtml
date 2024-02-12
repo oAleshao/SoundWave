@@ -25,20 +25,40 @@
             <li>
                 <a>
                     <img src="~/img/account.png" />
-                    <h2>Аккаунт</h2>
+                    <h2>@SoundWave.Resources.Resource.AccountInfo</h2>
                 </a>
             </li>
             <li>
                 <a asp-action="LogOut" asp-controller="Account" asp-route-currentSong.id="@Model.currentSong?.Id">
                     <img src="~/img/logout.png" />
-                    <h2>Выйти</h2>
+                    <h2>@SoundWave.Resources.Resource.Exit</h2>
                 </a>
+            </li>
+            <li >
+                <div id="languages">
+                    <img src="~/img/worldwide.png"/>
+                    <h2>@SoundWave.Resources.Resource.Language</h2>
+                    <div id="allLanguages">
+                        <a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="en">
+                            English(US)
+                        </a>
+                        <a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="ru">
+                            Русский
+                        </a>
+                        <a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="uk">
+                            Українська
+                        </a>
+                        <a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="fr">
+                            Français
+                        </a>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
     <div id="myHr"></div>
     <div id="aboutSoundWave">
-        <p>SoundWave - платформа для прослушивания музыки</p>
+        <p>@SoundWave.Resources.Resource.Info</p>@* SoundWave - платформа для прослушивания музыки *@
     </div>
 </div>
 
@@ -51,7 +71,7 @@
                 <a asp-action="Index" asp-controller="Home">
                     <div>
                         <img src="~/img/home.png" />
-                        <h2>Главная</h2>
+                        <h2>@SoundWave.Resources.Resource.Home</h2>
                     </div>
                 </a>
             </li>
@@ -59,7 +79,7 @@
                 <a>
                     <div>
                         <img src="~/img/compass.png" />
-                        <h2>Навигатор</h2>
+                        <h2>@SoundWave.Resources.Resource.Navigator</h2>
                     </div>
                 </a>
             </li>
@@ -67,7 +87,7 @@
                 <a>
                     <div>
                         <img src="~/img/playlist.png" />
-                        <h2>Библиотека</h2>
+                        <h2>@SoundWave.Resources.Resource.Library</h2>
                     </div>
                 </a>
             </li>
@@ -80,16 +100,16 @@
         @if (Model.UserChooseVideo)
         {
             <div id="btnAudio_Video" class="activeVideo">
-                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@false">Трек</a>
-                <a class="activeA" asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@true">Видео</a>
+                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@false">@SoundWave.Resources.Resource.Audio</a>
+                <a class="activeA" asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@true">@SoundWave.Resources.Resource.Video</a>
             </div>
 
         }
         else
         {
             <div id="btnAudio_Video" class="activeAudio ">
-                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@false" class="activeA">Трек</a>
-                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@true">Видео</a>
+                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@false" class="activeA">@SoundWave.Resources.Resource.Audio</a>
+                <a asp-action="PlaySong" asp-route-id="@Model.currentSong.Id" asp-route-UserChooseVideo="@true">@SoundWave.Resources.Resource.Video</a>
             </div>
         }
 
@@ -113,7 +133,7 @@
     <section id="mainBODY">
         <div class="styleNext">
             <h2>
-                ДАЛЕЕ
+                @SoundWave.Resources.Resource.Next
             </h2>
         </div>
         <section class="prokrutka">
@@ -174,13 +194,13 @@
         <audio id="audioPlayer" src="@Model.currentSong?.Href"></audio>
     </div>
     <div id="NextPrevPlayBtn">
-        <a asp-route-id="@Model.previousSong" id="previousBtn">
+        <a asp-route-id="@Model.previousSong" asp-action="PlaySong" id="previousBtn">
             <img src="/img/previous.png" />
         </a>
         <div id="playbtn">
             <img id="playbtnImg" src="/img/play.png" />
         </div>
-        <a asp-route-id="@Model.nextSong" id="nextBtn">
+        <a asp-route-id="@Model.nextSong" asp-action="PlaySong" id="nextBtn">
             <img src="/img/next.png" />
         </a>
     </div>

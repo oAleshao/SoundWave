@@ -3,11 +3,13 @@ using SoundWave.BLL.DTO;
 using SoundWave.BLL.Interfaces;
 using SoundWave.DAL.Entities;
 using SoundWave.DAL.Interfaces;
+using SoundWave.Filters;
 using SoundWave.Models;
 using System.Diagnostics;
 
 namespace SoundWave.Controllers
 {
+	[Culture]
 	public class HomeController : Controller
 	{
 		private readonly IPlaylistService playlistService;
@@ -23,7 +25,8 @@ namespace SoundWave.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			HomeModel model = new HomeModel();
+            HttpContext.Session.SetString("path", Request.Path);
+            HomeModel model = new HomeModel();
 			model.Songs = await songService.ToList();
 			model.currentSong = model.Songs.First();
 			model.previousSong = model.Songs.Last().Id;
@@ -61,5 +64,23 @@ namespace SoundWave.Controllers
 			model.currentSong = currentSong;
 
 		}
-	}
+        
+
+        public ActionResult ChooseCulture(string lang)
+        {
+            string? returnUrl = HttpContext.Session.GetString("path") ?? "/Home/Index";
+
+            // Список культур
+            List<string> cultures = new List<string>() { "ru", "en", "uk", "fr" };
+            if (!cultures.Contains(lang))
+            {
+                lang = "en";
+            }
+
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddDays(10); // срок хранения куки - 10 дней
+            Response.Cookies.Append("lang", lang, option); // создание куки
+            return Redirect(returnUrl);
+        }
+    }
 }

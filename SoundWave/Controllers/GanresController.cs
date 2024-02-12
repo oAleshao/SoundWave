@@ -4,11 +4,13 @@ using SoundWave.BLL.DTO;
 using SoundWave.BLL.Interfaces;
 using SoundWave.DAL.Entities;
 using SoundWave.DAL.Interfaces;
+using SoundWave.Filters;
 using SoundWave.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace SoundWave.Controllers
 {
+	[Culture]
 	public class GanresController : Controller
 	{
 		private readonly IGanreService ganreService;
@@ -23,7 +25,8 @@ namespace SoundWave.Controllers
 		// GET: Ganres
 		public async Task<IActionResult> Index()
 		{
-			GanreModel model = new GanreModel();
+            HttpContext.Session.SetString("path", Request.Path);
+            GanreModel model = new GanreModel();
 			model.ganres = await ganreService.ToList();
 			return View(model);
 		}
@@ -36,7 +39,8 @@ namespace SoundWave.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("Id,Title")] GanreModel ganre)
 		{
-			if (ModelState.IsValid)
+            HttpContext.Session.SetString("path", Request.Path);
+            if (ModelState.IsValid)
 			{
 				var g = new GanreDTO();
 				g.Title = ganre.Title;
@@ -50,7 +54,8 @@ namespace SoundWave.Controllers
 		// GET: Ganres/Edit/5
 		public async Task<IActionResult> Edit(int id)
 		{
-			if (id == 0)
+            HttpContext.Session.SetString("path", Request.Path);
+            if (id == 0)
 			{
 				return View("~/Views/Shared/Error.cshtml");
 			}
@@ -79,7 +84,7 @@ namespace SoundWave.Controllers
 			{
 				try
 				{
-					ganreService.Update(ganre);
+					await ganreService.Update(ganre);
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -101,7 +106,8 @@ namespace SoundWave.Controllers
 		// GET: Ganres/Delete/5
 		public async Task<IActionResult> Delete(int id)
 		{
-			if (id == 0)
+            HttpContext.Session.SetString("path", Request.Path);
+            if (id == 0)
 			{
 				return View("~/Views/Shared/Error.cshtml");
 			}

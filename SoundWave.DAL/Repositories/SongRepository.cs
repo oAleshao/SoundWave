@@ -33,7 +33,7 @@ namespace SoundWave.DAL.Repositories
 
 		public async Task<Song> GetById(int id)
 		{
-			return db.songs.Where(s => s.Id == id).Include(o => o.Owner).FirstOrDefault();
+			return db.songs.Where(s => s.Id == id).Include(o => o.Owner).Include(g=>g.ganres).FirstOrDefault();
 		}
 
 		/// <summary>

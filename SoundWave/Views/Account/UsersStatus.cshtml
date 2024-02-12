@@ -58,20 +58,40 @@
 						<li>
 							<a>
 								<img src="~/img/account.png" />
-								<h2>Аккаунт</h2>
+								<h2>@SoundWave.Resources.Resource.AccountInfo</h2>
 							</a>
 						</li>
 						<li>
 							<a asp-action="LogOut" asp-controller="Account">
 								<img src="~/img/logout.png" />
-								<h2>Выйти</h2>
+								<h2>@SoundWave.Resources.Resource.Exit</h2>
 							</a>
+						</li>
+						<li>
+							<div id="languages">
+								<img src="~/img/worldwide.png" />
+								<h2>@SoundWave.Resources.Resource.Language</h2>
+								<div id="allLanguages">
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="en">
+										English(US)
+									</a>
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="ru">
+										Русский
+									</a>
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="uk">
+										Українська
+									</a>
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="fr">
+										Français
+									</a>
+								</div>
+							</div>
 						</li>
 					</ul>
 				</div>
 				<div id="myHr"></div>
 				<div id="aboutSoundWave">
-					<p>SoundWave - платформа для прослушивания музыки</p>
+					<p>@SoundWave.Resources.Resource.Info</p>
 				</div>
 			</div>
 
@@ -87,7 +107,7 @@
 					<a asp-action="Index" asp-controller="Home">
 						<div>
 							<img src="~/img/home.png" />
-							<h2>Главная</h2>
+							<h2>@SoundWave.Resources.Resource.Home</h2>
 						</div>
 					</a>
 				</li>
@@ -95,7 +115,7 @@
 					<a asp-controller="Songs" asp-action="Index">
 						<div>
 							<img src="~/img/music-note.png" />
-							<h2>Добавить трек</h2>
+							<h2>@SoundWave.Resources.Resource.AddAudio</h2>
 						</div>
 					</a>
 				</li>
@@ -105,7 +125,7 @@
 						<a asp-action="Index" asp-controller="Ganres">
 							<div>
 								<img src="~/img/genre.png" />
-								<h2>Добаить жанр</h2>
+								<h2>@SoundWave.Resources.Resource.AddGenre</h2>
 							</div>
 						</a>
 					</li>
@@ -113,7 +133,7 @@
 						<a asp-action="UsersStatus" asp-controller="Account">
 							<div class="chooseView">
 								<img src="~/img/multiple-users-silhouette.png" />
-								<h2>Пользователи</h2>
+								<h2>@SoundWave.Resources.Resource.AddUser</h2>
 							</div>
 						</a>
 					</li>
@@ -125,29 +145,29 @@
 		{
 			<section id="fieldUserStatus">
 				<div>
-					<label>ФИО</label>
+					<label>@SoundWave.Resources.Resource.FullName</label>
 					<input type="text" readonly value="@Model.User.FullName" />
 				</div>
 				<div>
-					<label>Логин</label>
+					<label>@SoundWave.Resources.Resource.Login</label>
 					<input type="text" readonly value="@Model.User.login" />
 				</div>
 				<div>
 					@if (Model.User.Status)
 					{
-						<p>Пользователь уже авторизован</p>
+						<p>@SoundWave.Resources.Resource.IsAuthorised</p>
 					}
 					else
 					{
 						<a asp-action="AuthorizeUser" asp-controller="Account" asp-route-id="@Model.Id">
-							авторизовать
+							@SoundWave.Resources.Resource.Authorize
 						</a>
 					}
 				</div>
 			</section>
 		}
 		<section id="unauthorizedUsers">
-			<h2>Неавторизованные пользователи</h2>
+			<h2>@SoundWave.Resources.Resource.Unauthorized</h2>
 			<ul>
 				@foreach (var item in Model.users)
 				{
@@ -180,7 +200,7 @@
 			</ul>
 		</section>
 		<section id="authorizedUsers">
-			<h2>Авторизованные пользователи</h2>
+			<h2>@SoundWave.Resources.Resource.Authorized</h2>
 			<ul>
 				@foreach (var item in Model.users)
 				{

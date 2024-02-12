@@ -3,12 +3,14 @@ using SoundWave.BLL.DTO;
 using SoundWave.BLL.Interfaces;
 using SoundWave.DAL.Entities;
 using SoundWave.DAL.Interfaces;
+using SoundWave.Filters;
 using SoundWave.Models;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace SoundWave.Controllers
 {
+    [Culture]
     public class AccountController : Controller
     {
         private readonly IUserService userService;
@@ -153,6 +155,7 @@ namespace SoundWave.Controllers
 
         public async Task<IActionResult> UsersStatus()
         {
+            HttpContext.Session.SetString("path", Request.Path);
             var model = new UsersStatusModel();
             model.users = userService.ToList().Result.ToList();
             return View(model);

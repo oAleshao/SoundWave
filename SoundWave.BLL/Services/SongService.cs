@@ -113,14 +113,26 @@ namespace SoundWave.BLL.Services
 
 		public async Task Update(SongDTO song)
 		{
-			var upSong = new Song()
-			{
-				Id = song.Id,
-				Title = song.Title,
-				Executor = song.Executor,
-				Owner = await Database.users.GetById(song.OwnerId)
-			};
-			Database.songs.Update(upSong);
+
+			var upSong = await Database.songs.GetById(song.Id);
+
+			upSong.Title = song.Title;
+			upSong.Executor = song.Executor;
+			upSong.Owner = await Database.users.GetById(song.OwnerId);
+			upSong.duration = song.duration;
+			upSong.Like = song.Like;
+			upSong.Dislike = song.Dislike;
+			upSong.amountViews = song.amountViews;
+			upSong.Href = song.Href;
+			upSong.videoHref = song.videoHref;
+			upSong.preview = song.preview;
+			upSong.ganres = new List<Ganre>();
+            foreach (var item in song.ganres)
+            {
+                upSong.ganres.Add(await Database.ganres.GetById(item.Id));
+            }
+
+            Database.songs.Update(upSong);
 			await Database.Save();
 		}
 	}

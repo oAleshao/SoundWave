@@ -60,20 +60,40 @@
 						<li>
 							<a>
 								<img src="~/img/account.png" />
-								<h2>Аккаунт</h2>
+								<h2>@SoundWave.Resources.Resource.AccountInfo</h2>
 							</a>
 						</li>
 						<li>
 							<a asp-action="LogOut" asp-controller="Account">
 								<img src="~/img/logout.png" />
-								<h2>Выйти</h2>
+								<h2>@SoundWave.Resources.Resource.Exit</h2>
 							</a>
+						</li>
+						<li>
+							<div id="languages">
+								<img src="~/img/worldwide.png" />
+								<h2>@SoundWave.Resources.Resource.Language</h2>
+								<div id="allLanguages">
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="en">
+										English(US)
+									</a>
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="ru">
+										Русский
+									</a>
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="uk">
+										Українська
+									</a>
+									<a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="fr">
+										Français
+									</a>
+								</div>
+							</div>
 						</li>
 					</ul>
 				</div>
 				<div id="myHr"></div>
 				<div id="aboutSoundWave">
-					<p>SoundWave - платформа для прослушивания музыки</p>
+					<p>@SoundWave.Resources.Resource.Info</p>
 				</div>
 			</div>
 
@@ -89,7 +109,7 @@
 					<a asp-action="Index" asp-controller="Home">
 						<div>
 							<img src="~/img/home.png" />
-							<h2>Главная</h2>
+							<h2>@SoundWave.Resources.Resource.Home</h2>
 						</div>
 					</a>
 				</li>
@@ -97,7 +117,7 @@
 					<a asp-controller="Songs" asp-action="Index">
 						<div class="chooseView">
 							<img src="~/img/music-note.png" />
-							<h2>Добавить трек</h2>
+							<h2>@SoundWave.Resources.Resource.AddAudio</h2>
 						</div>
 					</a>
 				</li>
@@ -107,7 +127,7 @@
 						<a asp-action="Index" asp-controller="Ganres">
 							<div>
 								<img src="~/img/genre.png" />
-								<h2>Добаить жанр</h2>
+								<h2>@SoundWave.Resources.Resource.AddGenre</h2>
 							</div>
 						</a>
 					</li>
@@ -115,7 +135,7 @@
 						<a asp-action="UsersStatus" asp-controller="Account">
 							<div>
 								<img src="~/img/multiple-users-silhouette.png" />
-								<h2>Пользователи</h2>
+								<h2>@SoundWave.Resources.Resource.AddUser</h2>
 							</div>
 						</a>
 					</li>
@@ -124,45 +144,123 @@
 			<div id="hrSideBar" class="hiddenHrSideBar"></div>
 		</section>
 		<section id="ListSongs">
-			<p id="yourSongsAdd">Ваши треки:</p>
-			@foreach (var song in Model.songs)
-			{
-				if (song.OwnerId == Model.IdActiveUser)
-				{
-					if (song.Title.Length > 30 || song.Executor.Length > 30)
-					{
-						shortTittle = song.Title.Substring(0, 30);
-						shortTittle += "...";
-						shortExecutor = song.Executor.Substring(0, 30);
-						shortExecutor += "...";
-					}
-					else
-					{
-						shortTittle = song.Title;
-						shortExecutor = song.Executor;
-					}
+			<div>
+				<form id="filterForm">
+					<div id="SearchField">
+						<input id="SearchFieldInput" type="text" name="searchByTitle" placeholder="Search by title" />
+						<button asp-action="Index" id="btnSearch"><img src="~/img/search (1).png" /></button>
+						<img id="delFilters" src="~/img/reset.png" />
+						<input type="hidden" value="@Model.SortViewModel?.current" name="sortOrder" />
+					</div>
+					<div id="Filters">
+						<div id="listGenresForFilter">
+							<input id="filterGenres" name="filterByGenre" value="@Model.FilterViewModel.SelectedGenres" placeholder="Filter for genres" />
+							<img id="BtnOpenListGenres" src="~/img/arrowDownBlack.png" />
+							<div id="comboBoxGenres" class="styleComboBox">
+								@foreach (var g in Model.FilterViewModel.Genres)
+								{
+									<div>
+										<h2 class="SelectedGanres">@g.Title</h2>
+									</div>
+								}
 
-					<a asp-action="Edit" asp-controller="Songs" asp-route-id="@song.Id" class="songV">
-						<img src="@song.preview" />
-						<div>
-							<div><h2>@shortTittle</h2></div>
-							<div><p>@shortExecutor</p></div>
+
+							</div>
 						</div>
-						<h2 class="DurationList">@song.duration</h2>
-					</a>
+						<div id="listExecutorsForFilter">
+							<input id="filterExecutors" name="filterByExecutor" value="@Model.FilterViewModel.SelectedExecutor" placeholder="Filter for executors" />
+							<img id="BtnOpenListExecutors" src="~/img/arrowDownBlack.png" />
+							<div id="comboBoxUsers" class="styleComboBox">
+								@foreach (var ex in Model.FilterViewModel.Executors)
+								{
+									<div>
+										<h2 class="SelectedExecutor">@ex</h2>
+									</div>
+								}
+							</div>
+						</div>
+						<div id="FiltersSort">
+							<img id="SortFilterBtn" src="~/img/sort-descending.png" />
+							<div id="SortFilterList">
+								<a asp-route-sortOrder="@SortState.TitleAsc"
+								   asp-route-searchByTitle="@Model.FilterViewModel.SearchedData"
+								   asp-route-filterByGenre="@Model.FilterViewModel.SelectedGenres"
+								   asp-route-filterByExecutor="@Model.FilterViewModel.SelectedExecutor">
+									<div>
+										<h2>• A - Z</h2>
+									</div>
+								</a>
+								<a asp-route-sortOrder="@SortState.TitleDesc"
+								   asp-route-searchByTitle="@Model.FilterViewModel.SearchedData"
+								   asp-route-filterByGenre="@Model.FilterViewModel.SelectedGenres"
+								   asp-route-filterByExecutor="@Model.FilterViewModel.SelectedExecutor">
+									<div>
+										<h2>• Z - A</h2>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<p id="yourSongsAdd">@SoundWave.Resources.Resource.YourSongs:</p>
+			<div id="listSongs">
+				@foreach (var song in Model.songs)
+				{
+					if (song.OwnerId == Model.IdActiveUser)
+					{
+						if (song.Title.Length > 30 || song.Executor.Length > 30)
+						{
+							shortTittle = song.Title.Substring(0, 30);
+							shortTittle += "...";
+							shortExecutor = song.Executor.Substring(0, 30);
+							shortExecutor += "...";
+						}
+						else
+						{
+							shortTittle = song.Title;
+							shortExecutor = song.Executor;
+						}
+
+						<a asp-action="Edit" asp-controller="Songs" asp-route-id="@song.Id" class="songV">
+							<img src="@song.preview" />
+							<div>
+								<div><h2>@shortTittle</h2></div>
+								<div><p>@shortExecutor</p></div>
+							</div>
+							<h2 class="DurationList">@song.duration</h2>
+						</a>
+					}
 				}
-			}
+			</div>
+			<div>
+				<page-link page-model="Model.PageViewModel" page-action="Index"
+						   page-url-searchByTitle="@(Model.FilterViewModel.SearchedData)"
+						   page-url-filterByGenre="@(Model.FilterViewModel.SelectedGenres)"
+						   page-url-filterByExecutor="@(Model.FilterViewModel.SelectedExecutor)"
+						   page-url-sortOrder="@(Model.SortViewModel?.current)"> </page-link>
+			</div>
+
 		</section>
 
 		<section id="songDelete">
 			<div>
 				<div>
-					<h2>Вы действительно хотите удалить:</h2>
+					<h2>@SoundWave.Resources.Resource.ConfirmDelete:</h2>
 					<h3>@Model.Title?</h3>
 					<form asp-action="Delete">
 						<input type="hidden" asp-for="Id" />
-						<a asp-action="Edit" asp-route-id="@Model.Id">Назад</a>
-						<input type="submit" value="Удалить" />
+						<a asp-action="Edit" asp-route-id="@Model.Id"
+						   asp-route-searchByTitle="@(Model.FilterViewModel.SearchedData)"
+						   asp-route-filterByGenre="@(Model.FilterViewModel.SelectedGenres)"
+						   asp-route-filterByExecutor="@(Model.FilterViewModel.SelectedExecutor)"
+						   asp-route-sortOrder="@(Model.SortViewModel?.current)">@SoundWave.Resources.Resource.BackBtn</a>
+						<input type="submit" value="@SoundWave.Resources.Resource.DelBtn" />
+						<input id="filterByExecutorFormSend" type="hidden" name="filterByExecutor" value="@Model.FilterViewModel.SelectedExecutor" />
+						<input id="filterByGenreFormSend" type="hidden" name="filterByGenre" value="@Model.FilterViewModel.SelectedGenres" />
+						<input id="searchByTitleFormSend" type="hidden" name="searchByTitle" value="@Model.FilterViewModel.SearchedData" />
+						<input type="hidden" name="sortOrder" value="@Model.SortViewModel.current" />
+
 					</form>
 				</div>
 			</div>

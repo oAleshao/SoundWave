@@ -51,21 +51,21 @@ function changeStatusSideBar() {
         hrSideBar = document.createElement("div");
         hrSideBar.classList.add("visibleHrSideBar");
 
-        btnAddNewPlaylist = document.createElement("a");
-        btnAddNewPlaylist.classList.add("visibleAddPlaylist");
-        btnAddNewPlaylist.id = "btnAddNewPlaylist";
-        let div_btnAddNewPlaylist = document.createElement("div")
-        let img_div_btnAddNewPlaylist = document.createElement("img");
-        img_div_btnAddNewPlaylist.src = "/img/plus.png";
-        let h2_div_btnAddNewPlaylist = document.createElement("h2");
-        h2_div_btnAddNewPlaylist.textContent = "Создать";
+        //btnAddNewPlaylist = document.createElement("a");
+        //btnAddNewPlaylist.classList.add("visibleAddPlaylist");
+        //btnAddNewPlaylist.id = "btnAddNewPlaylist";
+        //let div_btnAddNewPlaylist = document.createElement("div")
+        //let img_div_btnAddNewPlaylist = document.createElement("img");
+        //img_div_btnAddNewPlaylist.src = "/img/plus.png";
+        //let h2_div_btnAddNewPlaylist = document.createElement("h2");
+        //h2_div_btnAddNewPlaylist.textContent = "Создать";
 
-        div_btnAddNewPlaylist.appendChild(img_div_btnAddNewPlaylist);
-        div_btnAddNewPlaylist.appendChild(h2_div_btnAddNewPlaylist);
-        btnAddNewPlaylist.appendChild(div_btnAddNewPlaylist);
+        //div_btnAddNewPlaylist.appendChild(img_div_btnAddNewPlaylist);
+        //div_btnAddNewPlaylist.appendChild(h2_div_btnAddNewPlaylist);
+        //btnAddNewPlaylist.appendChild(div_btnAddNewPlaylist);
 
-        sideBar.appendChild(hrSideBar);
-        sideBar.appendChild(btnAddNewPlaylist);
+        //sideBar.appendChild(hrSideBar);
+        //sideBar.appendChild(btnAddNewPlaylist);
     }
     else {
         sideBar.classList.remove("visibleSideBar");
@@ -312,8 +312,8 @@ function LaunchProgressBar() {
                 playSong();
             }
             else {
-                nextBtn.dispatchEvent(new Event("click"));
-                formnextBtn.submit();
+                let tmp = new Event("click")
+                nextBtn.click();
                 clearInterval(idInterval);
             }
         }
@@ -417,10 +417,17 @@ if (btnmymenu !== null) {
 
     mymenu.addEventListener("click", (event) => {
         event.stopPropagation();
+        allLanguages.style.display = "none";
     });
 
     bodyFromLayout.addEventListener("click", () => {
         mymenu.classList.remove("active");
+        allLanguages.style.display = "none";
+    });
+
+    languages.addEventListener("click", (event) => {
+        event.stopPropagation();
+        allLanguages.style.display = "block";
     });
 }
 

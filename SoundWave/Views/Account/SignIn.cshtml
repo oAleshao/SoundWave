@@ -22,29 +22,29 @@
 		<section id="btnSignInUp">
 			<div>
 				<span>
-					<a asp-area="" asp-controller="Account" asp-action="SignIn">Вход</a>
+					<a asp-area="" asp-controller="Account" asp-action="SignIn">@SoundWave.Resources.Resource.EnterTitle</a>
 				</span>
 			</div>
 			<div>
-				<a asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+				<a asp-area="" asp-controller="Account" asp-action="Register">@SoundWave.Resources.Resource.RegistrationTitle</a>
 			</div>
 		</section>
 		<form asp-action="SignIn">
 			<div asp-validation-summary="ModelOnly" style="color: black;" ></div>
 			<div>
-				<label asp-for="login" class="control-label">Логин</label>
+				<label asp-for="login" class="control-label">@SoundWave.Resources.Resource.Login</label>
 				<input asp-for="login" class="form-control" />
 				<span asp-validation-for="login" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
 				<label asp-for="password" class="control-label">
-					Пароль
+					@SoundWave.Resources.Resource.Password
 				</label>
 				<input asp-for="password" class="form-control" />
 				<span asp-validation-for="password" class="colorError" class="text-danger"></span>
 			</div>
 			<div>
-				<input type="submit" value="Войти" id="signInBtnSumbmit"/>
+				<input type="submit" value="@SoundWave.Resources.Resource.Enter" id="signInBtnSumbmit" />
 			</div>
 		</form>
 	</div>

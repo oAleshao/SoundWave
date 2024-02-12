@@ -54,8 +54,92 @@ profileMenubtn.addEventListener("click", (event) => {
 
 myMenu.addEventListener("click", (event) => {
     event.stopPropagation();
+    allLanguages.style.display = "none";
 });
 
-bodyFromLayout.addEventListener("click", () => {
+bodyFromLayoutWaveStudio.addEventListener("click", () => {
     myMenu.classList.remove("active");
+    allLanguages.style.display = "none";
+    comboBoxGenres.style.display = "none";
+    statusListGenres = false;
+    comboBoxUsers.style.display = "none";
+    statusListExecutors = false;
+    SortFilterList.style.display = "none";
+    statusListSort = false;
 });
+
+languages.addEventListener("click", (event) => {
+    event.stopPropagation();
+    allLanguages.style.display = "block";
+});
+
+
+
+let statusListGenres = false;
+BtnOpenListGenres.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (statusListGenres === false) {
+        comboBoxGenres.style.display = "block";
+        statusListGenres = true;
+    }
+    else {
+        comboBoxGenres.style.display = "none";
+        statusListGenres = false;
+    }
+});
+
+let statusListExecutors = false;
+BtnOpenListExecutors.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (statusListExecutors === false) {
+        comboBoxUsers.style.display = "block";
+        statusListExecutors = true;
+    }
+    else {
+        comboBoxUsers.style.display = "none";
+        statusListExecutors = false;
+    }
+});
+
+let statusListSort = false;
+SortFilterBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (statusListSort === false) {
+        SortFilterList.style.display = "block";
+        statusListSort = true;
+    }
+    else {
+        SortFilterList.style.display = "none";
+        statusListSort = false;
+    }
+});
+
+
+delFilters.onclick = () => {
+    filterGenres.value = "";
+    SearchFieldInput.value = "";
+    filterExecutors.value = "";
+    btnSearch.click();
+}
+
+let SelectedGanresList = document.querySelectorAll(".SelectedGanres");
+for (let i = 0; i < SelectedGanresList.length; i++) {
+    SelectedGanresList[i].addEventListener("click", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        filterGenres.value = this.textContent;
+        filterByGenreFormSend.value = this.textContent;
+        bodyFromLayoutWaveStudio.click();
+    });
+}
+
+let SelectedExecutorList = document.querySelectorAll(".SelectedExecutor");
+for (let i = 0; i < SelectedExecutorList.length; i++) {
+    SelectedExecutorList[i].addEventListener("click", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        filterExecutors.value = this.textContent;
+        filterByExecutorFormSend.value = this.textContent;
+        bodyFromLayoutWaveStudio.click();
+    });
+}
