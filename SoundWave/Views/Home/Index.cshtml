@@ -34,9 +34,9 @@
                     <h2>@SoundWave.Resources.Resource.Exit</h2>
                 </a>
             </li>
-            <li >
+            <li>
                 <div id="languages">
-                    <img src="~/img/worldwide.png"/>
+                    <img src="~/img/worldwide.png" />
                     <h2>@SoundWave.Resources.Resource.Language</h2>
                     <div id="allLanguages">
                         <a asp-action="ChooseCulture" asp-controller="Home" asp-route-lang="en">
@@ -139,18 +139,21 @@
         <section class="prokrutka">
             @foreach (var song in Model.Songs)
             {
-                if (song.Title.Length > 30 || song.Executor.Length > 30)
+                if (song.Title.Length > 30)
                 {
                     shortTittle = song.Title.Substring(0, 30);
                     shortTittle += "...";
+                }
+                else
+                    shortTittle = song.Title;
+
+                if (song.Executor.Length > 30)
+                {
                     shortExecutor = song.Executor.Substring(0, 30);
                     shortExecutor += "...";
                 }
                 else
-                {
-                    shortTittle = song.Title;
                     shortExecutor = song.Executor;
-                }
 
 
                 if (Model.currentSong != null && song.Id == Model.currentSong.Id)
@@ -215,18 +218,25 @@
                 <img src="@Model.currentSong?.preview" />
             </div>
             <div>
-                @if (Model.currentSong?.Title.Length > 30 || Model.currentSong?.Executor.Length > 30)
+               
+                @if (Model.currentSong?.Title.Length > 40)
                 {
-                    shortTittle = Model.currentSong?.Title.Substring(0, 30);
+                    shortTittle = Model.currentSong?.Title.Substring(0, 40);
                     shortTittle += "...";
-                    shortExecutor = Model.currentSong?.Executor.Substring(0, 30);
+                }
+                else
+                    shortTittle = Model.currentSong?.Title;
+
+                @if (Model.currentSong?.Executor.Length > 40)
+                {
+                    shortExecutor = Model.currentSong?.Executor.Substring(0, 40);
                     shortExecutor += "...";
                 }
                 else
-                {
-                    shortTittle = Model.currentSong?.Title;
                     shortExecutor = Model.currentSong?.Executor;
-                }
+                
+
+
                 <h2>@shortTittle</h2>
                 <h2>@shortExecutor</h2>
             </div>

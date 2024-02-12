@@ -250,6 +250,24 @@ namespace SoundWave.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter for executor.
+        /// </summary>
+        public static string FilterByExecutor {
+            get {
+                return ResourceManager.GetString("FilterByExecutor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter for genre.
+        /// </summary>
+        public static string FilterByGenre {
+            get {
+                return ResourceManager.GetString("FilterByGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fullname.
         /// </summary>
         public static string FullName {
@@ -381,6 +399,15 @@ namespace SoundWave.Resources {
         public static string RegistrationTitle {
             get {
                 return ResourceManager.GetString("RegistrationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by title.
+        /// </summary>
+        public static string SearchByTitle {
+            get {
+                return ResourceManager.GetString("SearchByTitle", resourceCulture);
             }
         }
         

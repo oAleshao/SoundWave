@@ -180,6 +180,12 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="FilterByExecutor" xml:space="preserve">
+    <value>Filter for executor</value>
+  </data>
+  <data name="FilterByGenre" xml:space="preserve">
+    <value>Filter for genre</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>Fullname</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="RegistrationTitle" xml:space="preserve">
     <value>Registration</value>
+  </data>
+  <data name="SearchByTitle" xml:space="preserve">
+    <value>Search by title</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>Sign in</value>

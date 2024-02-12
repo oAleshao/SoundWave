@@ -147,14 +147,14 @@
 			<div>
 				<form id="filterForm">
 					<div id="SearchField">
-						<input id="SearchFieldInput" type="text" name="searchByTitle" placeholder="Search by title" />
+						<input id="SearchFieldInput" type="text" name="searchByTitle" value="@Model.FilterViewModel.SearchedData" placeholder="@SoundWave.Resources.Resource.SearchByTitle" />
 						<button asp-action="Index" id="btnSearch"><img src="~/img/search (1).png" /></button>
 						<img id="delFilters" src="~/img/reset.png" />
 						<input type="hidden" value="@Model.SortViewModel?.current" name="sortOrder" />
 					</div>
 					<div id="Filters">
 						<div id="listGenresForFilter">
-							<input id="filterGenres" name="filterByGenre" value="@Model.FilterViewModel.SelectedGenres" placeholder="Filter for genres" />
+							<input id="filterGenres" name="filterByGenre" value="@Model.FilterViewModel.SelectedGenres" placeholder="@SoundWave.Resources.Resource.FilterByGenre" />
 							<img id="BtnOpenListGenres" src="~/img/arrowDownBlack.png" />
 							<div id="comboBoxGenres" class="styleComboBox">
 								@foreach (var g in Model.FilterViewModel.Genres)
@@ -168,7 +168,7 @@
 							</div>
 						</div>
 						<div id="listExecutorsForFilter">
-							<input id="filterExecutors" name="filterByExecutor" value="@Model.FilterViewModel.SelectedExecutor" placeholder="Filter for executors" />
+							<input id="filterExecutors" name="filterByExecutor" value="@Model.FilterViewModel.SelectedExecutor" placeholder="@SoundWave.Resources.Resource.FilterByExecutor" />
 							<img id="BtnOpenListExecutors" src="~/img/arrowDownBlack.png" />
 							<div id="comboBoxUsers" class="styleComboBox">
 								@foreach (var ex in Model.FilterViewModel.Executors)
@@ -209,20 +209,28 @@
 				{
 					if (song.OwnerId == Model.IdActiveUser)
 					{
-						if (song.Title.Length > 30 || song.Executor.Length > 30)
+						if (song.Title.Length > 30)
 						{
 							shortTittle = song.Title.Substring(0, 30);
 							shortTittle += "...";
+						}
+						else
+							shortTittle = song.Title;
+
+						if (song.Executor.Length > 30)
+						{
 							shortExecutor = song.Executor.Substring(0, 30);
 							shortExecutor += "...";
 						}
 						else
-						{
-							shortTittle = song.Title;
 							shortExecutor = song.Executor;
-						}
 
-						<a asp-action="Edit" asp-controller="Songs" asp-route-id="@song.Id" class="songV">
+
+						<a asp-action="Edit" asp-controller="Songs" asp-route-id="@song.Id"
+						   asp-route-searchByTitle="@(Model.FilterViewModel.SearchedData)"
+						   asp-route-filterByGenre="@(Model.FilterViewModel.SelectedGenres)"
+						   asp-route-filterByExecutor="@(Model.FilterViewModel.SelectedExecutor)"
+						   asp-route-sortOrder="@(Model.SortViewModel?.current)" class="songV">
 							<img src="@song.preview" />
 							<div>
 								<div><h2>@shortTittle</h2></div>

@@ -180,6 +180,12 @@
   <data name="Exit" xml:space="preserve">
     <value>Вихід</value>
   </data>
+  <data name="FilterByExecutor" xml:space="preserve">
+    <value>Фільтр по виконавцю</value>
+  </data>
+  <data name="FilterByGenre" xml:space="preserve">
+    <value>Фільтр по жанру</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>ФІО</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="RegistrationTitle" xml:space="preserve">
     <value>Регістрація</value>
+  </data>
+  <data name="SearchByTitle" xml:space="preserve">
+    <value>Пошук по назві</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>Ввійти</value>
