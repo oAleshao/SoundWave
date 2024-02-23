@@ -8,7 +8,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
-#timeToolTip{
+.activeNotification{
+    display: none;
+}
+
+#notification{
+    position: absolute;
+    width: 300px;
+    height: auto;
+    background: #2e2e2e;
+    border: 1px solid #757575cf;
+    border-radius: 10px;
+    color: white;
+    top: 78%;
+    left: 10px;
+}
+
+#notification div{
+    text-align:right;
+    margin: 0px;
+}
+
+#notification div img{
+    height: 20px;
+    margin-right: 7px;
+}
+
+#notification div img:hover{
+    opacity: 0.6;
+}
+
+#notification p{
+    padding: 0px 10px 0px 15px;
+}
+
+#timeToolTip {
     width: 100%;
     display: flex;
 }

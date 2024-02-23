@@ -6,8 +6,8 @@
     Context.Request.Cookies.TryGetValue("userLoginSoundWave", out string value);
     string shortTittle = string.Empty;
     string shortExecutor = string.Empty;
-
 }
+
 
 <div class="profileContextMenu">
 
@@ -186,6 +186,13 @@
 @* <span class="currentTime show">0:34</span> *@
 @* id="spansCurrentTime" *@
 
+<div id="notification" class="activeNotification">
+    <div>
+        <img id="btnCloseNot" src="~/img/Close.png"/>
+    </div>
+    <p id="notificationText">Добавлен новый трек:</p>
+</div>
+
 <div id="player">
     <div id="progressBar">
         <div id="secondProgressBar">
@@ -274,10 +281,28 @@
 </div>
 
 
-@* <section style="visibility: hidden;">
-    <form asp-action="PlaySong" id="nextSongUseJs">
-        <input asp-for="nextSong" />
-        <input asp-for="nextBtnJsWork" type="checkbox" checked />
-        <input type="submit" />
-    </form>
-</section> *@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(function () {
+           
+        console.log("WORK");
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/notification")
+            .build();
+
+        hubConnection.on("displayMessage", function (message) {
+            console.log(message);
+            $('#notificationText').html(message);
+            $('#notification').removeClass("activeNotification");
+        });
+
+        hubConnection.start()
+            .then()
+            .catch(function (err) {
+                return console.error(err.toString());
+            });
+
+    });
+</script>
+

@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using SoundWave.BLL.DTO;
 using SoundWave.BLL.Interfaces;
@@ -19,15 +20,16 @@ namespace SoundWave.Controllers
         private readonly IGanreService ganreService;
         private readonly CreaterModel createrModel;
         private readonly IWebHostEnvironment _appEnvironment;
-
-
-        public SongsController(ISongService songService, IUserService userService, IGanreService ganreService, IWebHostEnvironment _appEnvironment)
+        
+        IHubContext<NotificationHub> hubContext { get; }
+        public SongsController(ISongService songService, IUserService userService, IGanreService ganreService, IWebHostEnvironment _appEnvironment, IHubContext<NotificationHub> hub)
         {
             this.songService = songService;
             this.userService = userService;
             this.ganreService = ganreService;
             this._appEnvironment = _appEnvironment;
             createrModel = new CreaterModel(songService, userService, ganreService);
+            hubContext = hub;
 
 		}
 
@@ -113,12 +115,18 @@ namespace SoundWave.Controllers
                 TagLib.File mp3File = TagLib.File.Create(_appEnvironment.WebRootPath + pathHref);
                 s.duration = mp3File.Properties.Duration.ToString("mm\\:ss");
                 await songService.Create(s);
+                await SendMessage($"Добавлен новый трек: {s.Executor} {s.Title}");
                 return View("~/Views/Songs/Index.cshtml", await createrModel.CreateModel(searchByTitle, filterByGenre, filterByExecutor, (SortState)sortOrder, null, null, Request.Cookies["userLoginSoundWave"], page));
             }
             return View("~/Views/Songs/Index.cshtml", model);
         }
 
-   
+
+        private async Task SendMessage(string message)
+        {
+            // Вызов метода displayMessage на всех клиентах
+            await hubContext.Clients.All.SendAsync("displayMessage", message);
+        }
 
         public async Task<IActionResult> Edit(int id, string? searchByTitle, string? filterByGenre,
             string? filterByExecutor, SortState? sortOrder, int page = 1)
@@ -202,7 +210,8 @@ namespace SoundWave.Controllers
                 changedSong.Title = song.Title;
                 changedSong.Executor = song.Executor;
                 await songService.Update(changedSong);
-				return View("~/Views/Songs/Index.cshtml", await createrModel.CreateModel(searchByTitle, filterByGenre, filterByExecutor, (SortState)sortOrder, null, model, Request.Cookies["userLoginSoundWave"], page));
+                await SendMessage($"Обновлен трек: {changedSong.Executor} {changedSong.Title}");
+                return View("~/Views/Songs/Index.cshtml", await createrModel.CreateModel(searchByTitle, filterByGenre, filterByExecutor, (SortState)sortOrder, null, model, Request.Cookies["userLoginSoundWave"], page));
 
 			}
 
@@ -237,11 +246,13 @@ namespace SoundWave.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id, string? searchByTitle, string? filterByGenre,
 			string? filterByExecutor, SortState? sortOrder, int page = 1)
         {
+            var changedSong = await songService.GetById(id);
             if (id != 0)
             {
                 await songService.Delete(id);
             }
-			return View("~/Views/Songs/Index.cshtml", await createrModel.CreateModel(searchByTitle, filterByGenre, filterByExecutor, (SortState)sortOrder, null, null, Request.Cookies["userLoginSoundWave"], page));
+            await SendMessage($"Был удален трек: {changedSong.Executor} {changedSong.Title}");
+            return View("~/Views/Songs/Index.cshtml", await createrModel.CreateModel(searchByTitle, filterByGenre, filterByExecutor, (SortState)sortOrder, null, null, Request.Cookies["userLoginSoundWave"], page));
 
 		}
 

@@ -431,5 +431,12 @@ if (btnmymenu !== null) {
     });
 }
 
+let notification = document.getElementById("notification");
+
+if (notification !== null) {
+    btnCloseNot.onclick = () => {
+        notification.classList.add("activeNotification");
+    }
+}
 
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using SoundWave.BLL.DTO;
 using SoundWave.BLL.Interfaces;
 using SoundWave.DAL.Entities;
@@ -15,13 +16,14 @@ namespace SoundWave.Controllers
 		private readonly IPlaylistService playlistService;
 		private readonly ISongService songService;
 		private readonly IUserService userService;
-
-		public HomeController(IUserService userService, IPlaylistService playlistService, ISongService songService)
+        IHubContext<NotificationHub> hubContext { get; }
+        public HomeController(IUserService userService, IPlaylistService playlistService, ISongService songService, IHubContext<NotificationHub> hub)
 		{
 			this.userService = userService;
 			this.playlistService = playlistService;
 			this.songService = songService;
-		}
+            hubContext = hub;
+        }
 
 		public async Task<IActionResult> Index()
 		{
@@ -31,8 +33,9 @@ namespace SoundWave.Controllers
 			model.currentSong = model.Songs.First();
 			model.previousSong = model.Songs.Last().Id;
 			model.nextSong = model.Songs.Skip(1).Take(1).FirstOrDefault().Id;
-			//model.playlists = await playlistService.ToList();
-			return View("Index", model);
+            //model.playlists = await playlistService.ToList();
+            
+            return View("Index", model);
 		}
 
 		public async Task<IActionResult> PlaySong(int id, bool UserChooseVideo, bool nextSongBtnJs)
@@ -42,8 +45,7 @@ namespace SoundWave.Controllers
 			model.Songs = await songService.ToList();
 			//model.playlists = await playlistService.ToList();
 			GetPrevCurNextSong(id, model);
-
-			return View("Index", model);
+            return View("Index", model);
 		}
 
 		public static void GetPrevCurNextSong(int id, HomeModel model)
@@ -64,7 +66,12 @@ namespace SoundWave.Controllers
 			model.currentSong = currentSong;
 
 		}
-        
+
+        private async Task SendMessage(string message)
+        {
+            // Вызов метода displayMessage на всех клиентах
+            await hubContext.Clients.All.SendAsync("displayMessage", message);
+        }
 
         public ActionResult ChooseCulture(string lang)
         {

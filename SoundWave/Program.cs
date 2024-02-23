@@ -1,6 +1,7 @@
 using SoundWave.BLL.Interfaces;
 using SoundWave.BLL.Services;
 using SoundWave.BLL.Infrastructure;
+using SoundWave;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddTransient<ISongService, SongService>();
 builder.Services.AddTransient<IHistoryService, HistoryService>();
 builder.Services.AddTransient<IUserService, UserService>();
 
+builder.Services.AddSignalR();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -46,5 +48,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<NotificationHub>("/notification");
 
 app.Run();
